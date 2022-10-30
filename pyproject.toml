@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "citygml-convert-tools"
+version = "0.0.1"
+description = "citygml-convert-tools"
+authors = ["Hiroshi Omata <op.homata@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+tqdm = "^4.64.1"
+cjio = "^0.7.6"
+triangle = "^20220202"
+lxml = "^4.9.1"
+opencv-python = "^4.6.0.66"
+opencv-contrib-python = "^4.6.0.66"
+argparse = "^1.4.0"
+scipy = "^1.9.3"
+jupyterlab = "^3.4.8"
+open3d = "^0.16.0"
+trimesh = "^3.15.8"
+pyproj = "^3.4.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
