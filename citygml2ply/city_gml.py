@@ -22,9 +22,16 @@ class CityGml:
         self.filename = filename
         self.basename = os.path.basename(filename)
 
-        # mesh code
+        # basename
         basenames = self.mesh_code = self.basename.split('_')
+        # メッシュコード
         self.mesh_code = basenames[0]
+        # 地物型 (bldg)
+        self.object_name = basenames[1]
+        # CRS 空間参照 ID (SRID)
+        self.from_srid = basenames[2]
+        self.to_srid = to_srid
+
         # 空間参照 ID (SRID)
         self.from_srid = basenames[2]
         self.to_srid = to_srid
@@ -103,5 +110,5 @@ class CityGml:
         basedir = Path(os.path.dirname(os.path.abspath(__file__)))
         for index, obj_building in enumerate(self.obj_buildings):
             triangle_mesh = obj_building.get_triangle_mesh()
-            pathname = os.path.join(basedir, outputpath, f"{self.mesh_code}_{self.to_srid}_{index}.ply")
+            pathname = os.path.join(basedir, outputpath, f"{self.mesh_code}_{self.object_name}_{self.to_srid}_{index:02}.ply")
             o3d.io.write_triangle_mesh(pathname, triangle_mesh, write_ascii=True)
