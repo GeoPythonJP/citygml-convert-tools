@@ -12,7 +12,7 @@ $ poetry shell
 1. citygml2ply
   - CityGML -> PLYファイル変換
   - 建物(bldg)のみ対応
-  - LOD0, LOD1, LOD2
+  - LOD0, LOD1, LOD2対応
   - テクスチャは非対応
 
 ### usage 
@@ -35,15 +35,16 @@ optional arguments:
 
 実行例
 ```
-$ python main.py data/53392633_bldg_6697_2_op.gml --to_srid=6677
+$ python main.py 53392633_bldg_6697_2_op.gml --lod=2 --to_srid=6677
 ```
 
-出力ディレクトリ: citygml2ply/output
+出力ディレクトリ: ./output
 
 
 ### ライブラリ
 
 #### 単調多角形を三角形分割する手法(耳刈り取り法)
+
 ```
 $ git submodule add https://github.com/joshuaskelly/earcut-python.git citygml2ply/contrib/earcutpython
 ```
@@ -59,14 +60,14 @@ $ git submodule add https://github.com/joshuaskelly/earcut-python.git citygml2pl
 * [AcculusSasao/plateaupy](https://github.com/AcculusSasao/plateaupy)
 * [ksasao/PlateauCityGmlSharp](https://github.com/ksasao/PlateauCityGmlSharp/)
 
-### CitGMLビューワー
+### CityGMLビューワー
 * Windows版
     * [FZKViewer](https://www.iai.kit.edu/1302.php)
         * [FZKViewer のインストール（Windows 上）](https://www.kkaneko.jp/tools/win/fzkviewer.html)
 * Mac版
     * [azul](https://github.com/tudelft3d/azul)
 
-### 座標系
+### 座標系のメモ
 
 #### CityGMLの座標系　緯度/経度:6697-6668
 * 日本測地系2011における経緯度座標系と東京湾平均海面を基準とする標高の複合座標参照系 6697
