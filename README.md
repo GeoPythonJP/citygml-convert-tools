@@ -9,8 +9,11 @@ $ poetry shell
 ```
 
 ### CityGML 変換ツール
-* citygml2ply
+1. citygml2ply
   - CityGML -> PLYファイル変換
+  - 建物(bldg)のみ対応
+  - LOD0, LOD1, LOD2
+  - テクスチャは非対応
 
 ### usage 
 ```
