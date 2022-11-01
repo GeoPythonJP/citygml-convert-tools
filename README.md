@@ -48,7 +48,14 @@ $ python main.py data/53392633_bldg_6697_2_op.gml --to_srid=6677
 $ git submodule add https://github.com/joshuaskelly/earcut-python.git citygml2ply/contrib/earcutpython
 ```
 
-### 参考コード
+### ライセンス
+下記のライセンスで公開をしてます。
+* [MIT License](https://github.com/GeoPythonJP/citygml-convert-tools/blob/master/LICENSE)
+
+下記のモジュールを参考、使用しています。
+各々のライセンスに従ってください。
+
+* [earcut-python](https://github.com/joshuaskelly/earcut-python)
 * [AcculusSasao/plateaupy](https://github.com/AcculusSasao/plateaupy)
 * [ksasao/PlateauCityGmlSharp](https://github.com/ksasao/PlateauCityGmlSharp/)
 
