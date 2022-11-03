@@ -56,7 +56,7 @@ class CityGml:
 
             # bldg:lod0RoofEdge
             vals = building.xpath('bldg:lod0RoofEdge/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList', namespaces=nsmap)
-            polygons = [str2floats(v).reshape((-1,3)) for v in vals]
+            polygons = [str2floats(v).reshape((-1, 3)) for v in vals]
             obj_building.create_triangle_meshes(polygons)
             self.obj_buildings.append(obj_building)
 
