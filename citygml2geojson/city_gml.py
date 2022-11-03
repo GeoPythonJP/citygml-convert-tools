@@ -11,7 +11,6 @@ from building import Building
 import pandas as pd
 import geopandas as gpd
 # Shapely: https://shapely.readthedocs.io/en/latest/index.html
-from shapely import wkt
 from shapely.geometry import Polygon
 
 
@@ -107,17 +106,7 @@ class CityGml:
     def write_geojson(self, outputpath):
         basedir = Path(os.path.dirname(os.path.abspath(__file__)))
         for index, obj_building in enumerate(self.obj_buildings):
-            vertices = obj_building.get_vertices()
-            polygon = Polygon(vertices)
-
-            data = {}
-            data["geometry"] = polygon
-
-            data_list = []
-            data_list.append(data)
-
-            df_data = pd.DataFrame(data_list)
+            df_data = pd.DataFrame([dict(geometry=Polygon(obj_building.get_vertices()))])
             gdf_data = gpd.GeoDataFrame(df_data, crs=f"EPSG:{self.to_srid}")
-
             pathname = os.path.join(basedir, outputpath, f"{self.mesh_code}_{self.object_name}_{self.to_srid}_{index:02}.geojson")
             gdf_data.to_file(pathname, driver="GeoJSON")

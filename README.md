@@ -30,6 +30,12 @@ CityGML 変換ツール
   - LOD0, LOD1, LOD2対応
   - テクスチャは非対応
 
+2. citygml2geojson
+  - CityGML -> GeoJSONファイル変換
+  - 建物(bldg)のみ対応
+  - LOD0, LOD1, LOD2対応
+  - テクスチャは非対応
+
 ### usage 
 ```
 $ cd citygml2ply
