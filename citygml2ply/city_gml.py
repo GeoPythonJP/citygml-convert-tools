@@ -42,18 +42,11 @@ class CityGml:
         self.tree = tree
         self.root = root
 
-        # nsmap
-        nsmap = {}
-        for k, v in root.nsmap.items():
-            if k is not None:
-                nsmap[k] = v
-        self.nsmap = nsmap
-
         # buildings
         self.obj_buildings = []
 
     def lod0(self):
-        nsmap = self.nsmap
+        nsmap = self.root.nsmap
         tree = self.tree
 
         # scan cityObjectMember
@@ -68,7 +61,7 @@ class CityGml:
             self.obj_buildings.append(obj_building)
 
     def lod1(self):
-        nsmap = self.nsmap
+        nsmap = self.root.nsmap
         tree = self.tree
 
         # scan cityObjectMember
@@ -83,7 +76,7 @@ class CityGml:
             self.obj_buildings.append(obj_building)
 
     def lod2(self):
-        nsmap = self.nsmap
+        nsmap = self.root.nsmap
         tree = self.tree
 
         # scan cityObjectMember
