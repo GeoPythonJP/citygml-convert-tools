@@ -84,9 +84,17 @@ $ git submodule add https://github.com/joshuaskelly/earcut-python.git citygml2pl
 
 ### 座標系のメモ
 
-#### CityGMLの座標系　緯度/経度:6697-6668
-* 日本測地系2011における経緯度座標系と東京湾平均海面を基準とする標高の複合座標参照系 6697
-* 日本測地系2011における経緯度座標系 6668
+#### CityGMLの座標系
+* 日本測地系2011における経緯度座標系と東京湾平均海面を基準とする標高の複合座標参照系: 6697
+* 日本測地系2011における経緯度座標系: 6668
+
+#### EPSG:6697
+EPSG:6697というのは「JGD2011 + JGD2011 (vertical) height」という座標参照系でEPSG:6668（JGD2011）とEPSG:6695（JGD2011 (vertical) height）からなる座標系である
+
+* [EPSG:6697](https://epsg.io/6697): JGD2011 + JGD2011 (vertical) height　緯度、経度、標高 (EPSG:6668+6695)
+  * [EPSG:6668](https://epsg.io/6668): JGD2011　緯度、経度
+  * [EPSG:6695](https://epsg.io/6695): JGD2011 (vertical) height　標高単位：m
+* [EPSG:6666](https://epsg.io/6666):  JGD2011 地心直交座標系 (X, Y, Z) 地球中心のXYZ 単位：m
 
 #### 日本測地系2011　平面直角座標系:6669-6687
 ```
