@@ -224,6 +224,34 @@ python-versions = ">=3.7"
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
+name = "click-plugins"
+version = "1.1.1"
+description = "An extension module for click to enable registering CLI commands via setuptools entry-points."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+click = ">=4.0"
+
+[package.extras]
+dev = ["coveralls", "pytest (>=3.6)", "pytest-cov", "wheel"]
+
+[[package]]
+name = "cligj"
+version = "0.7.2"
+description = "Click params for commmand line interfaces to GeoJSON"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, <4"
+
+[package.dependencies]
+click = ">=4.0"
+
+[package.extras]
+test = ["pytest-cov"]
+
+[[package]]
 name = "colorama"
 version = "0.4.5"
 description = "Cross-platform colored terminal text."
@@ -371,6 +399,30 @@ python-versions = "*"
 devel = ["colorama", "json-spec", "jsonschema", "pylint", "pytest", "pytest-benchmark", "pytest-cache", "validictory"]
 
 [[package]]
+name = "fiona"
+version = "1.8.22"
+description = "Fiona reads and writes spatial data files"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+attrs = ">=17"
+certifi = "*"
+click = ">=4.0"
+click-plugins = ">=1.0"
+cligj = ">=0.5"
+munch = "*"
+setuptools = "*"
+six = ">=1.7"
+
+[package.extras]
+all = ["boto3 (>=1.2.4)", "mock", "pytest (>=3)", "pytest-cov", "shapely"]
+calc = ["shapely"]
+s3 = ["boto3 (>=1.2.4)"]
+test = ["boto3 (>=1.2.4)", "mock", "pytest (>=3)", "pytest-cov"]
+
+[[package]]
 name = "flask"
 version = "2.2.2"
 description = "A simple framework for building complex web applications."
@@ -422,6 +474,21 @@ type1 = ["xattr"]
 ufo = ["fs (>=2.2.0,<3)"]
 unicode = ["unicodedata2 (>=14.0.0)"]
 woff = ["brotli (>=1.0.1)", "brotlicffi (>=0.8.0)", "zopfli (>=0.1.4)"]
+
+[[package]]
+name = "geopandas"
+version = "0.12.1"
+description = "Geographic pandas extensions"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+fiona = ">=1.8"
+packaging = "*"
+pandas = ">=1.0.0"
+pyproj = ">=2.6.1.post1"
+shapely = ">=1.7"
 
 [[package]]
 name = "idna"
@@ -783,6 +850,21 @@ description = "More routines for operating on iterables, beyond itertools"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "munch"
+version = "2.5.0"
+description = "A dot-accessible dictionary (a la JavaScript objects)"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+six = "*"
+
+[package.extras]
+testing = ["astroid (>=1.5.3,<1.6.0)", "astroid (>=2.0)", "coverage", "pylint (>=1.7.2,<1.8.0)", "pylint (>=2.3.1,<2.4.0)", "pytest"]
+yaml = ["PyYAML (>=5.1.0)"]
 
 [[package]]
 name = "nbclassic"
@@ -1403,6 +1485,19 @@ test = ["pytest (>=6.2)", "virtualenv (>20)"]
 toml = ["setuptools (>=42)"]
 
 [[package]]
+name = "shapely"
+version = "1.8.5.post1"
+description = "Geometric objects, predicates, and operations"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+all = ["numpy", "pytest", "pytest-cov"]
+test = ["pytest", "pytest-cov"]
+vectorized = ["numpy"]
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -1643,7 +1738,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "418c512768c024145418f62a45d71e563c5f1206077e279f8745fa286387610f"
+content-hash = "d8e1d32b40429d693994bb26948a318e6328a182614ccdd06dd071c286bc60e2"
 
 [metadata.files]
 addict = [
@@ -1862,6 +1957,14 @@ click = [
     {file = "click-8.1.3-py3-none-any.whl", hash = "sha256:bb4d8133cb15a609f44e8213d9b391b0809795062913b383c62be0ee95b1db48"},
     {file = "click-8.1.3.tar.gz", hash = "sha256:7682dc8afb30297001674575ea00d1814d808d6a36af415a82bd481d37ba7b8e"},
 ]
+click-plugins = [
+    {file = "click-plugins-1.1.1.tar.gz", hash = "sha256:46ab999744a9d831159c3411bb0c79346d94a444df9a3a3742e9ed63645f264b"},
+    {file = "click_plugins-1.1.1-py2.py3-none-any.whl", hash = "sha256:5d262006d3222f5057fd81e1623d4443e41dcda5dc815c06b442aa3c02889fc8"},
+]
+cligj = [
+    {file = "cligj-0.7.2-py3-none-any.whl", hash = "sha256:c1ca117dbce1fe20a5809dc96f01e1c2840f6dcc939b3ddbb1111bf330ba82df"},
+    {file = "cligj-0.7.2.tar.gz", hash = "sha256:a4bc13d623356b373c2c27c53dbd9c68cae5d526270bfa71f6c6fa69669c6b27"},
+]
 colorama = [
     {file = "colorama-0.4.5-py2.py3-none-any.whl", hash = "sha256:854bf444933e37f5824ae7bfc1e98d5bce2ebe4160d46b5edf346a89358e99da"},
     {file = "colorama-0.4.5.tar.gz", hash = "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"},
@@ -2001,6 +2104,27 @@ fastjsonschema = [
     {file = "fastjsonschema-2.16.2-py3-none-any.whl", hash = "sha256:21f918e8d9a1a4ba9c22e09574ba72267a6762d47822db9add95f6454e51cc1c"},
     {file = "fastjsonschema-2.16.2.tar.gz", hash = "sha256:01e366f25d9047816fe3d288cbfc3e10541daf0af2044763f3d0ade42476da18"},
 ]
+fiona = [
+    {file = "Fiona-1.8.22-cp310-cp310-macosx_10_10_x86_64.whl", hash = "sha256:59a3800bc09ebee3516d64d02a8a6818d07ab1573c6096f3ef3468bf9f8f95f8"},
+    {file = "Fiona-1.8.22-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:904793b17aee70ca9c3d582dbf01623eccfdeacd00c5e1a8e421be41f2e43d67"},
+    {file = "Fiona-1.8.22-cp310-cp310-win_amd64.whl", hash = "sha256:df34c980cd7396adfbc89bbb363bdd6e358c76f91969fc98c9dfc076dd11638d"},
+    {file = "Fiona-1.8.22-cp311-cp311-macosx_10_15_x86_64.whl", hash = "sha256:75924f69c51db6e258c91308780546278028c509db12aa33a47692a0266c9667"},
+    {file = "Fiona-1.8.22-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e33860aaf70bbd2726cff12fd3857bd832b6dc2ad3ce4b27e7563bd68abdc26f"},
+    {file = "Fiona-1.8.22-cp311-cp311-win_amd64.whl", hash = "sha256:18649326a7724611b16b648e14fd094089d517413b95ac91d0cdb0adc5fcb8de"},
+    {file = "Fiona-1.8.22-cp36-cp36m-macosx_10_10_x86_64.whl", hash = "sha256:c4aafdd565b3a30bdd78cafae35d4945f6741eef31401c1bb1e166b6262d7539"},
+    {file = "Fiona-1.8.22-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3f26c8b6ea9bc92cbd52a4dd83ffd44472450bf92f4e3d4ef2341adc2f35a54d"},
+    {file = "Fiona-1.8.22-cp36-cp36m-win_amd64.whl", hash = "sha256:c28d9ffa5d230a1d9eaf571529fa9eb7573d39613354c090ad077ad153a37ee1"},
+    {file = "Fiona-1.8.22-cp37-cp37m-macosx_10_10_x86_64.whl", hash = "sha256:d47777890aa1d715025abc7a6d6b2a6bb8d2a37cc94c44ce95940b80eda21444"},
+    {file = "Fiona-1.8.22-cp37-cp37m-manylinux2014_x86_64.whl", hash = "sha256:e3ed1c0c1c60f710a612aaeb294de54214d228c4ef40e0c1dc159e46f86a9446"},
+    {file = "Fiona-1.8.22-cp37-cp37m-win_amd64.whl", hash = "sha256:ce9a22c9883cc5d11c05ba3fb9db5082044a07c6b299753ea5bb8e178b8ba53b"},
+    {file = "Fiona-1.8.22-cp38-cp38-macosx_10_10_x86_64.whl", hash = "sha256:6ba2294bc6adcbc36229862667aac6b98e6c306e1958caf53b8bfcf9a3b8c77a"},
+    {file = "Fiona-1.8.22-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b5cad3424b7473eb0e19f17ee45abec92133a694a4b452a278f02e3b8d0f810f"},
+    {file = "Fiona-1.8.22-cp38-cp38-win_amd64.whl", hash = "sha256:b88e2e6548a41c1dfa3f96c8275ff472a3edca729e14a641c0fa5b2e146a8ab5"},
+    {file = "Fiona-1.8.22-cp39-cp39-macosx_10_10_x86_64.whl", hash = "sha256:ed75dd29c89e0e455e3a322f28cd92f192bcb8fced16e2bfb6422a7f95ffe5e9"},
+    {file = "Fiona-1.8.22-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:89cfcc3bdb4aba7bba1eb552b3866b851334693ab694529803122b21f5927960"},
+    {file = "Fiona-1.8.22-cp39-cp39-win_amd64.whl", hash = "sha256:d0df3e105ad7f0cca5f16b441c232fd693ef6c4adf2c1b6271aaaa1cdc06164d"},
+    {file = "Fiona-1.8.22.tar.gz", hash = "sha256:a82a99ce9b3e7825740157c45c9fb2259d4e92f0a886aaac25f0db40ffe1eea3"},
+]
 flask = [
     {file = "Flask-2.2.2-py3-none-any.whl", hash = "sha256:b9c46cc36662a7949f34b52d8ec7bb59c0d74ba08ba6cb9ce9adc1d8676d9526"},
     {file = "Flask-2.2.2.tar.gz", hash = "sha256:642c450d19c4ad482f96729bd2a8f6d32554aa1e231f4f6b4e7e5264b16cca2b"},
@@ -2012,6 +2136,10 @@ flask-compress = [
 fonttools = [
     {file = "fonttools-4.38.0-py3-none-any.whl", hash = "sha256:820466f43c8be8c3009aef8b87e785014133508f0de64ec469e4efb643ae54fb"},
     {file = "fonttools-4.38.0.zip", hash = "sha256:2bb244009f9bf3fa100fc3ead6aeb99febe5985fa20afbfbaa2f8946c2fbdaf1"},
+]
+geopandas = [
+    {file = "geopandas-0.12.1-py3-none-any.whl", hash = "sha256:0cf7f59a7b962bdbee09c1848b1715d1c445d5d27302f219f7f88b4484adef1c"},
+    {file = "geopandas-0.12.1.tar.gz", hash = "sha256:917655f25ee3022809114d833d45969d38afe9f7e5ff2a3b875a85f9bf686819"},
 ]
 idna = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
@@ -2319,6 +2447,10 @@ mistune = [
 more-itertools = [
     {file = "more-itertools-9.0.0.tar.gz", hash = "sha256:5a6257e40878ef0520b1803990e3e22303a41b5714006c32a3fd8304b26ea1ab"},
     {file = "more_itertools-9.0.0-py3-none-any.whl", hash = "sha256:250e83d7e81d0c87ca6bd942e6aeab8cc9daa6096d12c5308f3f92fa5e5c1f41"},
+]
+munch = [
+    {file = "munch-2.5.0-py2.py3-none-any.whl", hash = "sha256:6f44af89a2ce4ed04ff8de41f70b226b984db10a91dcc7b9ac2efc1c77022fdd"},
+    {file = "munch-2.5.0.tar.gz", hash = "sha256:2d735f6f24d4dba3417fa448cae40c6e896ec1fdab6cdb5e6510999758a4dbd2"},
 ]
 nbclassic = [
     {file = "nbclassic-0.4.7-py3-none-any.whl", hash = "sha256:d71d18aa6605eaf59e9b99b34c96360af45847f2a30ee2fefbe2f7bed4bc3df2"},
@@ -2866,6 +2998,47 @@ setuptools = [
 setuptools-scm = [
     {file = "setuptools_scm-7.0.5-py3-none-any.whl", hash = "sha256:7930f720905e03ccd1e1d821db521bff7ec2ac9cf0ceb6552dd73d24a45d3b02"},
     {file = "setuptools_scm-7.0.5.tar.gz", hash = "sha256:031e13af771d6f892b941adb6ea04545bbf91ebc5ce68c78aaf3fff6e1fb4844"},
+]
+shapely = [
+    {file = "Shapely-1.8.5.post1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:d048f93e42ba578b82758c15d8ae037d08e69d91d9872bca5a1895b118f4e2b0"},
+    {file = "Shapely-1.8.5.post1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:99ab0ddc05e44acabdbe657c599fdb9b2d82e86c5493bdae216c0c4018a82dee"},
+    {file = "Shapely-1.8.5.post1-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:99a2f0da0109e81e0c101a2b4cd8412f73f5f299e7b5b2deaf64cd2a100ac118"},
+    {file = "Shapely-1.8.5.post1-cp310-cp310-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:6fe855e7d45685926b6ba00aaeb5eba5862611f7465775dacd527e081a8ced6d"},
+    {file = "Shapely-1.8.5.post1-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:ec14ceca36f67cb48b34d02d7f65a9acae15cd72b48e303531893ba4a960f3ea"},
+    {file = "Shapely-1.8.5.post1-cp310-cp310-win32.whl", hash = "sha256:21776184516a16bf82a0c3d6d6a312b3cd15a4cabafc61ee01cf2714a82e8396"},
+    {file = "Shapely-1.8.5.post1-cp310-cp310-win_amd64.whl", hash = "sha256:a354199219c8d836f280b88f2c5102c81bb044ccea45bd361dc38a79f3873714"},
+    {file = "Shapely-1.8.5.post1-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:783bad5f48e2708a0e2f695a34ed382e4162c795cb2f0368b39528ac1d6db7ed"},
+    {file = "Shapely-1.8.5.post1-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:a23ef3882d6aa203dd3623a3d55d698f59bfbd9f8a3bfed52c2da05a7f0f8640"},
+    {file = "Shapely-1.8.5.post1-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:ab38f7b5196ace05725e407cb8cab9ff66edb8e6f7bb36a398e8f73f52a7aaa2"},
+    {file = "Shapely-1.8.5.post1-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:8d086591f744be483b34628b391d741e46f2645fe37594319e0a673cc2c26bcf"},
+    {file = "Shapely-1.8.5.post1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4728666fff8cccc65a07448cae72c75a8773fea061c3f4f139c44adc429b18c3"},
+    {file = "Shapely-1.8.5.post1-cp311-cp311-win32.whl", hash = "sha256:84010db15eb364a52b74ea8804ef92a6a930dfc1981d17a369444b6ddec66efd"},
+    {file = "Shapely-1.8.5.post1-cp311-cp311-win_amd64.whl", hash = "sha256:48dcfffb9e225c0481120f4bdf622131c8c95f342b00b158cdbe220edbbe20b6"},
+    {file = "Shapely-1.8.5.post1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:2fd15397638df291c427a53d641d3e6fd60458128029c8c4f487190473a69a91"},
+    {file = "Shapely-1.8.5.post1-cp36-cp36m-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:a74631e511153366c6dbe3229fa93f877e3c87ea8369cd00f1d38c76b0ed9ace"},
+    {file = "Shapely-1.8.5.post1-cp36-cp36m-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:66bdac74fbd1d3458fa787191a90fa0ae610f09e2a5ec398c36f968cc0ed743f"},
+    {file = "Shapely-1.8.5.post1-cp36-cp36m-win32.whl", hash = "sha256:6d388c0c1bd878ed1af4583695690aa52234b02ed35f93a1c8486ff52a555838"},
+    {file = "Shapely-1.8.5.post1-cp36-cp36m-win_amd64.whl", hash = "sha256:be9423d5a3577ac2e92c7e758bd8a2b205f5e51a012177a590bc46fc51eb4834"},
+    {file = "Shapely-1.8.5.post1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:5d7f85c2d35d39ff53c9216bc76b7641c52326f7e09aaad1789a3611a0f812f2"},
+    {file = "Shapely-1.8.5.post1-cp37-cp37m-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:adcf8a11b98af9375e32bff91de184f33a68dc48b9cb9becad4f132fa25cfa3c"},
+    {file = "Shapely-1.8.5.post1-cp37-cp37m-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:753ed0e21ab108bd4282405b9b659f2e985e8502b1a72b978eaa51d3496dee19"},
+    {file = "Shapely-1.8.5.post1-cp37-cp37m-win32.whl", hash = "sha256:65b21243d8f6bcd421210daf1fabb9de84de2c04353c5b026173b88d17c1a581"},
+    {file = "Shapely-1.8.5.post1-cp37-cp37m-win_amd64.whl", hash = "sha256:370b574c78dc5af3a198a6da5d9b3d7c04654bd2ef7e80e80a3a0992dfb2d9cd"},
+    {file = "Shapely-1.8.5.post1-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:532a55ee2a6c52d23d6f7d1567c8f0473635f3b270262c44e1b0c88096827e22"},
+    {file = "Shapely-1.8.5.post1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:3480657460e939f45a7d359ef0e172a081f249312557fe9aa78c4fd3a362d993"},
+    {file = "Shapely-1.8.5.post1-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:b65f5d530ba91e49ffc7c589255e878d2506a8b96ffce69d3b7c4500a9a9eaf8"},
+    {file = "Shapely-1.8.5.post1-cp38-cp38-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:147066da0be41b147a61f8eb805dea3b13709dbc873a431ccd7306e24d712bc0"},
+    {file = "Shapely-1.8.5.post1-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:c2822111ddc5bcfb116e6c663e403579d0fe3f147d2a97426011a191c43a7458"},
+    {file = "Shapely-1.8.5.post1-cp38-cp38-win32.whl", hash = "sha256:2e0a8c2e55f1be1312b51c92b06462ea89e6bb703fab4b114e7a846d941cfc40"},
+    {file = "Shapely-1.8.5.post1-cp38-cp38-win_amd64.whl", hash = "sha256:0d885cb0cf670c1c834df3f371de8726efdf711f18e2a75da5cfa82843a7ab65"},
+    {file = "Shapely-1.8.5.post1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:0b4ee3132ee90f07d63db3aea316c4c065ed7a26231458dda0874414a09d6ba3"},
+    {file = "Shapely-1.8.5.post1-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:02dd5d7dc6e46515d88874134dc8fcdc65826bca93c3eecee59d1910c42c1b17"},
+    {file = "Shapely-1.8.5.post1-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:c6a9a4a31cd6e86d0fbe8473ceed83d4fe760b19d949fb557ef668defafea0f6"},
+    {file = "Shapely-1.8.5.post1-cp39-cp39-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:38f0fbbcb8ca20c16451c966c1f527cc43968e121c8a048af19ed3e339a921cd"},
+    {file = "Shapely-1.8.5.post1-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:78fb9d929b8ee15cfd424b6c10879ce1907f24e05fb83310fc47d2cd27088e40"},
+    {file = "Shapely-1.8.5.post1-cp39-cp39-win32.whl", hash = "sha256:8e59817b0fe63d34baedaabba8c393c0090f061917d18fc0bcc2f621937a8f73"},
+    {file = "Shapely-1.8.5.post1-cp39-cp39-win_amd64.whl", hash = "sha256:e9c30b311de2513555ab02464ebb76115d242842b29c412f5a9aa0cac57be9f6"},
+    {file = "Shapely-1.8.5.post1.tar.gz", hash = "sha256:ef3be705c3eac282a28058e6c6e5503419b250f482320df2172abcbea642c831"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
