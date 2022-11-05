@@ -16,17 +16,20 @@ CityGMLYファイル → PLYファイル変換
 ```
 $ cd citygml2ply
 $ python main.py -h
-usage: main.py [-h] -to_srid TO_SRID [-lod LOD] filename
 
-citygml-convert-tools
+usage: main.py [-h] [-output OUTPUT] -to_srid TO_SRID [-lod LOD] filename
+
+CityGML to PLY convert
 
 positional arguments:
   filename              input CityGML filename
 
 optional arguments:
   -h, --help            show this help message and exit
+  -output OUTPUT, --output OUTPUT
+                        output path name
   -to_srid TO_SRID, --to_srid TO_SRID
-                        to SRID
+                        SRID(EPSG)
   -lod LOD, --lod LOD   output lod type 0:lod0 1:lod1 2:lod2
 ```
 
@@ -44,4 +47,4 @@ $ python main.py 53392633_bldg_6697_2_op.gml --lod=2 --to_srid=6677
 ### Modules
 下記のモジュールを参考、使用しています。
 各々のライセンスに従ってください。
-* 
+
