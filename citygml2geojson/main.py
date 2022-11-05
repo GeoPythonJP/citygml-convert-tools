@@ -10,13 +10,13 @@ from city_gml import CityGml
 
 if __name__ == '__main__':
     try:
-        parser = argparse.ArgumentParser(description='citygml to GeoJSON convert')
+        parser = argparse.ArgumentParser(description='CityGML to GeoJSON convert')
 
         parser.add_argument('filename', help='input CityGML filename')
         parser.add_argument('-output', '--output', default="output", help='output path')
         parser.add_argument('-to_srid', '--to_srid', default="4326", help='to SRID')
         parser.add_argument('-lod', '--lod', default=2, type=int, help='output lod type 0:lod0 1:lod1 2:lod2')
-        parser.add_argument('-lonlat', '--lonlat', default=True, action='store_true', help='swap longitude, latitude order')
+        parser.add_argument('-lonlat', '--lonlat', default=True, action='store_true', help='swap longitude,latitude order')
 
         args = parser.parse_args()
 

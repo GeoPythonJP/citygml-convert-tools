@@ -11,6 +11,7 @@ from building import Building
 
 
 def str2floats(x):
+    """ x y z -> [x, y, z] """
     return np.array([float(i) for i in x.text.split(' ')])
 
 
@@ -88,20 +89,20 @@ class CityGml:
             polygon_xpaths = ['bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon',
                               'bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon',
                               'bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon']
-            polygons = []
+            vals_list = []
             for polygon_xpath in polygon_xpaths:
-                building_xpaths = building.xpath(polygon_xpath, namespaces=nsmap)
-                for building_xpath in building_xpaths:
-                    vals = building_xpath.xpath('gml:exterior/gml:LinearRing/gml:posList', namespaces=nsmap)
-                    surface = [str2floats(v).reshape((-1, 3)) for v in vals]
-                    polygons.extend(surface)
+                poslist_xpaths = building.xpath(polygon_xpath, namespaces=nsmap)
+                for poslist_xpath in poslist_xpaths:
+                    vals = poslist_xpath.xpath('gml:exterior/gml:LinearRing/gml:posList', namespaces=nsmap)
+                    vals_list.extend(vals)
 
+            polygons = [str2floats(v).reshape((-1, 3)) for v in vals_list]
             obj_building.create_triangle_meshes(polygons)
             self.obj_buildings.append(obj_building)
 
-    def write_ply(self, outputpath):
+    def write_ply(self, output_path):
         basedir = Path(os.path.dirname(os.path.abspath(__file__)))
         for index, obj_building in enumerate(self.obj_buildings):
             triangle_mesh = obj_building.get_triangle_mesh()
-            pathname = os.path.join(basedir, outputpath, f"{self.mesh_code}_{self.object_name}_{self.to_srid}_{index:02}.ply")
+            pathname = os.path.join(basedir, output_path, f"{self.mesh_code}_{self.object_name}_{self.to_srid}_{index:02}.ply")
             o3d.io.write_triangle_mesh(pathname, triangle_mesh, write_ascii=True)
