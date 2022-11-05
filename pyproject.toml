@@ -20,6 +20,8 @@ open3d = "^0.16.0"
 trimesh = "^3.15.8"
 pyproj = "^3.4.0"
 geopandas = "^0.12.1"
+cesiumpy = "^0.3.3"
+geopy = "2.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

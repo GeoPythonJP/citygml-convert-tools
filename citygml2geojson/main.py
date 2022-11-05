@@ -10,19 +10,23 @@ from city_gml import CityGml
 
 if __name__ == '__main__':
     try:
-        parser = argparse.ArgumentParser(description='citygml-convert-tools')
+        parser = argparse.ArgumentParser(description='citygml to GeoJSON convert')
 
         parser.add_argument('filename', help='input CityGML filename')
-        parser.add_argument('-to_srid', '--to_srid', default="6677", required=True, help='to SRID')
+        parser.add_argument('-output', '--output', default="output", help='output path')
+        parser.add_argument('-to_srid', '--to_srid', default="4326", help='to SRID')
         parser.add_argument('-lod', '--lod', default=2, type=int, help='output lod type 0:lod0 1:lod1 2:lod2')
+        parser.add_argument('-lonlat', '--lonlat', default=True, action='store_true', help='swap longitude, latitude order')
 
         args = parser.parse_args()
 
-        filename = args.filename   # 'data/53392633_bldg_6697_2_op.gml'
-        to_srid = args.to_srid     # '6677'
-        lod = args.lod             # 2
+        filename = args.filename   # e.g. 53392633_bldg_6697_2_op
+        output_path = args.output  # default = 'output'
+        to_srid = args.to_srid     # defalt = '4326'
+        lod = args.lod             # defalt = 2
+        lonlat_f = args.lonlat     # defalt = True
 
-        obj_city_gml = CityGml(filename, to_srid)
+        obj_city_gml = CityGml(filename, to_srid, lonlat_f)
         if lod == 0:
             obj_city_gml.lod0()
         elif lod == 1:
@@ -32,9 +36,8 @@ if __name__ == '__main__':
         else:
             raise Exception(f'ERROR: lod number = {lod}')
 
-        outpath = "output"
-        os.makedirs(outpath, exist_ok=True)
-        obj_city_gml.write_geojson(outpath)
+        os.makedirs(output_path, exist_ok=True)
+        obj_city_gml.write_geojson(output_path)
 
     except Exception as e:
         print(e)

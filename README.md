@@ -1,94 +1,67 @@
-citygml-convert-tools
+[![Python 3](https://img.shields.io/badge/python-3-blue.svg)](https://www.python.org/) 
+
+CityGML変換ツール (citygml-convert-tools)
 ===
 
-CityGMLとは
----
-"""
-CityGML は、都市スケールの分析・シミュレーションに必要なセマンティクスを記述できる地理空間データのための唯一の標準データフォーマットである。諸外国では国家・都市レベルでのデータ整備が進められているが、日本における大規模なデータ整備は今回が初の試みである。
+[CityGML](https://www.mlit.go.jp/plateau/learning/)は、地理空間データのため標準データフォーマットです。
+XMLベースで定義されているCityGMLは、中間データフォーマットと言われているように利用サイドが使いやすい形式に変換して利用することを想定されている。
+手軽にCityGMLファイルを変換できるツールを作成した
 
-CityGML は、都市に存在する建物や街路、橋梁などのオブジェクトを地物として定義し、形状や名称、種類、建築年といったオブジェクトについての空間・時間・主題に係る全ての情報を地物の属性として定義している。この厳密性の高さにより、誰が作った3D都市モデルであっても、どの場所の3D都市モデルであっても、一貫性のあるデータ構造となる。
-"""
-https://www.mlit.go.jp/plateau/learning/
+コードは出来るだけシンプルにしたかったので、サンプルコードとしてバッサリとコードは簡潔にしてます。  
+エラー処理やテスト等も省略している部分があります。何かの参考にしていただければ幸いです  
 
-インストール
+## Tools
+* [citygml2ply](./citygml2ply/README.md) : CityGMLYファイル → PLYファイル変換 
+* [citygml2geojson](./citygml2geojson/README.md): CityGMLYファイル → GeoJSONファイル変換
+
+## Changelog
+see the [changelog](./CHANGELOG.md).
+
+Installation
 ---
+Pythonと[poetry](https://python-poetry.org/)を利用します。
+
 ```
 $ git clone --recursive git@github.com:GeoPythonJP/citygml-convert-tools.git
 $ poetry install
 $ poetry shell
 ```
 
-CityGML 変換ツール
+License
 ---
-コードは出来るだけシンプルにしたかったので、サンプルとしてバッサリと簡潔にしてます。  
-参考にしていただければ幸いです  
-※ LOD2のテクスチャは対応は、次バージョンで対応予定
+MIT
+See the[license](./LICENSE) document for the full text.
 
-1. citygml2ply
-  - CityGML -> PLYファイル変換
-  - 建物(bldg)のみ対応
-  - LOD0, LOD1, LOD2対応
-  - テクスチャは非対応
-
-2. citygml2geojson
-  - CityGML -> GeoJSONファイル変換
-  - 建物(bldg)のみ対応
-  - LOD0, LOD1, LOD2対応
-  - テクスチャは非対応
-
-### usage 
-```
-$ cd citygml2ply
-$ python main.py -h
-usage: main.py [-h] -to_srid TO_SRID [-lod LOD] filename
-
-citygml-convert-tools
-
-positional arguments:
-  filename              input CityGML filename
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -to_srid TO_SRID, --to_srid TO_SRID
-                        to SRID
-  -lod LOD, --lod LOD   output lod type 0:lod0 1:lod1 2:lod2
-```
-
-実行例
-```
-$ python main.py 53392633_bldg_6697_2_op.gml --lod=2 --to_srid=6677
-```
-
-出力ディレクトリ: ./output
-
-
-### ライブラリ
-
-#### 単調多角形を三角形分割する手法(耳刈り取り法)
-
-```
-$ git submodule add https://github.com/joshuaskelly/earcut-python.git citygml2ply/contrib/earcutpython
-```
-
-### ライセンス
-下記のライセンスで公開をしてます。
-* [MIT License](https://github.com/GeoPythonJP/citygml-convert-tools/blob/master/LICENSE)
-
+Modules
+---
 下記のモジュールを参考、使用しています。
 各々のライセンスに従ってください。
-
 * [earcut-python](https://github.com/joshuaskelly/earcut-python)
 * [AcculusSasao/plateaupy](https://github.com/AcculusSasao/plateaupy)
 * [ksasao/PlateauCityGmlSharp](https://github.com/ksasao/PlateauCityGmlSharp/)
 
-### CityGMLビューワー
+#### 単調多角形を三角形分割する手法(耳刈り取り法)
+```
+$ git submodule add https://github.com/joshuaskelly/earcut-python.git citygml2ply/contrib/earcutpython
+```
+
+Contributors
+---
+* [homata](http://github.com/homata)
+
+CityGMLビューワー
+---
+CityGMLファイルを表示させる下記のツールがあります。
+
 * Windows版
     * [FZKViewer](https://www.iai.kit.edu/1302.php)
         * [FZKViewer のインストール（Windows 上）](https://www.kkaneko.jp/tools/win/fzkviewer.html)
 * Mac版
     * [azul](https://github.com/tudelft3d/azul)
 
-### 座標系のメモ
+座標系のメモ
+---
+座標系の変換等をする場合の参考情報を記述します
 
 #### CityGMLの座標系
 * 日本測地系2011における経緯度座標系と東京湾平均海面を基準とする標高の複合座標参照系: 6697
@@ -126,10 +99,11 @@ EPSG:6697というのは「JGD2011 + JGD2011 (vertical) height」という座標
 19	6687	東京都の一部
 ```
 
----
 
 PLATEAU関連情報
 ---
+PLATEAU関連情報のメモ
+
 * [Project PLATEAU](https://www.mlit.go.jp/plateau/)
     * [3D都市モデル標準製品仕様書（第2.3版）](https://www.mlit.go.jp/plateau/file/libraries/doc/plateau_doc_0001_ver02.pdf)
     * [3D都市モデル標準製品仕様書（第2.3版）(HTML)](https://www.mlit.go.jp/plateaudocument/)
@@ -144,19 +118,29 @@ PLATEAU関連情報
 * [国土交通データプラットフォーム](https://www.mlit-data.jp/platform/)
 * [スマートシティ官民連携プラットフォーム](https://www.mlit.go.jp/scpf/)
 
-仕様と変換ツール類
----
+### 仕様と変換ツール類
 * [CityGML](https://www.ogc.org/standards/citygml)
 * [CityJSON](https://www.cityjson.org/)
 * [FME](https://www.safe.com/fme/)
 * [3dcitydb/3dcitydb](https://github.com/3dcitydb/3dcitydb)
 
----
+### CityGML
+* [CityGML 3.0のGML仕様のドラフト](https://www.ogc.org/standards/requests/257)
+
+### i-UR
+* i-UR1.4は名前空間及びXMLSchemaファイルの所在が変更されたことに伴い、i-UR1.5に改定されている (https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur)
+
+### 3dcitydb
+TBD
+
+### CityJSON
+TBD
 
 参考
 ---
+その他の関連情報のメモ
 
-#### OpenStreetMap
+### OpenStreetMap
 * [JA:MLIT PLATEAU/imports outline](https://wiki.openstreetmap.org/wiki/JA:MLIT_PLATEAU/imports_outline)
   * [議論：JA talk:MLIT PLATEAU/imports outline](https://wiki.openstreetmap.org/wiki/JA_talk:MLIT_PLATEAU/imports_outline#既存データを編集していたマッパーへの、OSMメッセージ連絡の要否)
 * [JA talk:MLIT PLATEAU](https://wiki.openstreetmap.org/wiki/JA_talk:MLIT_PLATEAU)
@@ -164,8 +148,10 @@ PLATEAU関連情報
     * [citygml-osm wiki](https://github.com/yuuhayashi/citygml-osm/wiki/Transformation)
 * [Plateau建物データ: OpenStreetMapへのインポート手順（ドラフト）](https://qiita.com/nyampire/items/1c10afdd36750c87154d)
 
-便利な編集ツール
----
+### 便利なツール
 * [CloudCompare](https://cloudcompare.org/)
 * [Meshlab](https://www.meshlab.net/)
 * [Blender.jp](https://blender.jp/)
+* [Cesium](https://cesium.com/)
+* [QGIS](https://qgis.org/)
+
