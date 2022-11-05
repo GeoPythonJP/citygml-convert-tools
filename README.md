@@ -67,6 +67,10 @@ CityGMLファイルを表示させる下記のツールがあります。
 * 日本測地系2011における経緯度座標系と東京湾平均海面を基準とする標高の複合座標参照系: 6697
 * 日本測地系2011における経緯度座標系: 6668
 
+#### 日本の測地系
+* [日本の測地系](https://www.gsi.go.jp/sokuchikijun/datum-main.html)
+* [わかりやすい平面直角座標系](https://www.gsi.go.jp/sokuchikijun/jpc.html)
+
 #### EPSG:6697
 EPSG:6697というのは「JGD2011 + JGD2011 (vertical) height」という座標参照系でEPSG:6668（JGD2011）とEPSG:6695（JGD2011 (vertical) height）からなる座標系である
 
@@ -136,10 +140,6 @@ TBD
 ### CityJSON
 TBD
 
-参考
----
-その他の関連情報のメモ
-
 ### OpenStreetMap
 * [JA:MLIT PLATEAU/imports outline](https://wiki.openstreetmap.org/wiki/JA:MLIT_PLATEAU/imports_outline)
   * [議論：JA talk:MLIT PLATEAU/imports outline](https://wiki.openstreetmap.org/wiki/JA_talk:MLIT_PLATEAU/imports_outline#既存データを編集していたマッパーへの、OSMメッセージ連絡の要否)
@@ -154,4 +154,9 @@ TBD
 * [Blender.jp](https://blender.jp/)
 * [Cesium](https://cesium.com/)
 * [QGIS](https://qgis.org/)
+
+### その他
+
+関連情報のメモ
+* [Geo関連情報のメモ](./GEOMEMO.md)
 
