@@ -67,3 +67,17 @@ Geo関連情報のメモ
 * [電子国土基本図（地名情報）「住居表示住所」](https://www.gsi.go.jp/kihonjohochousa/jukyo_jusho.html)
 * [地名集日本（GAZETTEER OF JAPAN)](https://www.gsi.go.jp/kihonjohochousa/gazetteer.html)
 * [OpenAddressess(海外)](https://openaddresses.io/)
+
+
+----
+
+### リンク集
+
+#### GIS学習サイト
+* [GIS実習オープン教材](https://gis-oer.github.io/gitbook/book/)
+* [オンラインGIS教材](https://sites.google.com/view/gis-online-learning/)
+* [地理教材共有サイト](https://sites.google.com/view/geoclass2020/)
+
+#### 雑多なメモ 
+* [Pythonではじめる地理空間情報(α版) HackMD](https://hackmd.io/@geopythonjp/HkppxtRP5/%2FBBL9R2NVRAaagfWNHHIHhQ)
+  * [Pythonではじめる地理空間情報 (PyConJP2022版)](https://speakerdeck.com/homata/pythondehazimerudi-li-kong-jian-qing-bao)
