@@ -13,8 +13,8 @@ if __name__ == '__main__':
         parser = argparse.ArgumentParser(description='CityGML to PLY convert')
 
         parser.add_argument('filename', help='input CityGML filename')
-        parser.add_argument('-output', '--output', default="output", help='output path')
-        parser.add_argument('-to_srid', '--to_srid', default="6677", required=True, help='to SRID')
+        parser.add_argument('-output', '--output', default="output", help='output path name')
+        parser.add_argument('-to_srid', '--to_srid', default="6677", required=True, help='SRID(EPSG)')
         parser.add_argument('-lod', '--lod', default=2, type=int, help='output lod type 0:lod0 1:lod1 2:lod2')
 
         args = parser.parse_args()

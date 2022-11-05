@@ -18,7 +18,7 @@ $ python main.py -h
 
 usage: main.py [-h] [-output OUTPUT] [-to_srid TO_SRID] [-lod LOD] [-lonlat] filename
 
-citygml to GeoJSON convert
+CityGML to GeoJSON convert
 
 positional arguments:
   filename              input CityGML filename
@@ -26,11 +26,11 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -output OUTPUT, --output OUTPUT
-                        output path
+                        output path name
   -to_srid TO_SRID, --to_srid TO_SRID
-                        to SRID
+                        SRID(EPSG)
   -lod LOD, --lod LOD   output lod type 0:lod0 1:lod1 2:lod2
-  -lonlat, --lonlat     swap longitude, latitude order
+  -lonlat, --lonlat     swap longitude,latitude order
 ```
 
 ### Examples
@@ -44,4 +44,3 @@ $ python main.py 53392633_bldg_6697_2_op.gml
 ### Modules
 下記のモジュールを参考、使用しています。
 各々のライセンスに従ってください。
-* 
