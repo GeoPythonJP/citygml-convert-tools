@@ -39,7 +39,6 @@ Geo関連情報のメモ
 第1次メッシュ: 1辺の長さは約80km  
 第2次メッシュ: 1辺の長さは約10km  
 第3次メッシュ: 1辺の長さは約1km  
-:   
 
 * [JIS X 0410:2002地域メッシュコー](https://www.jisc.go.jp/app/jis/general/GnrJISNumberNameSearchList?show&jisStdNo=X0410)
   * [JIS X 0410:2002「地域メッシュコード」（日本産業標準調査会、経済産業省）](https://www.jisc.go.jp/app/jis/general/GnrJISNumberNameSearchList?show&jisStdNo=X0410)
@@ -54,7 +53,7 @@ Geo関連情報のメモ
   - [オープンソースのジオコーディング API ](https://github.com/geolonia/community-geocoder)
   - [Geolonia 住所データ](https://github.com/geolonia/japanese-addresses)
   - [オープンソースの住所正規化ライブラリです。](https://github.com/geolonia/normalize-japanese-addresses)
-* [EacelGeo (ITDART)](http://excelgeo.itdart.org/)
+* [ExcelGeo (ITDART)](http://excelgeo.itdart.org/)
 
 #### 参考
 * [地番と住居表示の違いは何か](https://登記簿図書館.com/cpu/column/theme01/column03.html)
@@ -78,6 +77,6 @@ Geo関連情報のメモ
 * [オンラインGIS教材](https://sites.google.com/view/gis-online-learning/)
 * [地理教材共有サイト](https://sites.google.com/view/geoclass2020/)
 
-#### 雑多なメモ 
+#### 雑多なメモ
 * [Pythonではじめる地理空間情報(α版) HackMD](https://hackmd.io/@geopythonjp/HkppxtRP5/%2FBBL9R2NVRAaagfWNHHIHhQ)
   * [Pythonではじめる地理空間情報 (PyConJP2022版)](https://speakerdeck.com/homata/pythondehazimerudi-li-kong-jian-qing-bao)
