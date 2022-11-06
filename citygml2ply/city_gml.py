@@ -23,17 +23,13 @@ class CityGml:
         self.filename = filename
         self.basename = os.path.basename(filename)
 
-        # basename
-        basenames = self.mesh_code = self.basename.split('_')
+        # split from basename
+        basenames = self.basename.split('_')
         # メッシュコード
         self.mesh_code = basenames[0]
         # 地物型 (bldg)
         self.object_name = basenames[1]
         # CRS 空間参照 ID (SRID)
-        self.from_srid = basenames[2]
-        self.to_srid = to_srid
-
-        # 空間参照 ID (SRID)
         self.from_srid = basenames[2]
         self.to_srid = to_srid
 
