@@ -52,8 +52,8 @@ class CityGml:
             obj_building = Building(self.from_srid, self.to_srid)
 
             # bldg:lod0RoofEdge
-            vals = building.xpath('bldg:lod0RoofEdge/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList', namespaces=nsmap)
-            polygons = [str2floats(v).reshape((-1, 3)) for v in vals]
+            faces = building.xpath('bldg:lod0RoofEdge/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList', namespaces=nsmap)
+            polygons = [str2floats(face_str).reshape((-1, 3)) for face_str in faces]
             obj_building.create_triangle_meshes(polygons)
             self.obj_buildings.append(obj_building)
 
@@ -67,8 +67,8 @@ class CityGml:
             obj_building = Building(self.from_srid, self.to_srid)
 
             # bldg:lod1Solid
-            vals = building.xpath('bldg:lod1Solid/gml:Solid/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList', namespaces=nsmap)
-            polygons = [str2floats(v).reshape((-1, 3)) for v in vals]
+            faces = building.xpath('bldg:lod1Solid/gml:Solid/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList', namespaces=nsmap)
+            polygons = [str2floats(face_str).reshape((-1, 3)) for face_str in faces]
             obj_building.create_triangle_meshes(polygons)
             self.obj_buildings.append(obj_building)
 
