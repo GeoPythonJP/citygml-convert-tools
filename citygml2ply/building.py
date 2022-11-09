@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import math
+
 import numpy as np
 import open3d as o3d
 import pyproj
-import math
 
 from contrib.earcutpython.earcut.earcut import earcut
 
 
 class Building:
-    """ bldg:Building"""
+    """bldg:Building"""
 
     def __init__(self, from_srid="6697", to_srid="6677"):
         # super().__init__()
@@ -21,7 +22,9 @@ class Building:
         self.triangle_meshes = []
 
         # pyproj.Transformer.from_crs(<変換元座標系>, <変換先座標系> [, always_xy])
-        self.transformer = pyproj.Transformer.from_crs(f"epsg:{from_srid}", f"epsg:{to_srid}")
+        self.transformer = pyproj.Transformer.from_crs(
+            f"epsg:{from_srid}", f"epsg:{to_srid}"
+        )
 
     def get_triangle_mesh(self):
         return self.triangle_meshes
@@ -85,6 +88,6 @@ class Building:
             x3 += np.array([1, 2, 3])
         x3 = x3 - np.dot(x3, n) * n
 
-        x3 /= math.sqrt((x3 ** 2).sum())
+        x3 /= math.sqrt((x3**2).sum())
         y3 = np.cross(n, x3)
         return (np.dot(p, x3), np.dot(p, y3))
