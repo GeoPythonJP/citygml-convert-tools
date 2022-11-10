@@ -6,7 +6,6 @@ import math
 import numpy as np
 import open3d as o3d
 import pyproj
-
 from contrib.earcutpython.earcut.earcut import earcut
 
 
@@ -39,7 +38,7 @@ class Building:
             transformed_polygon = transformed_polygon[::-1]
             transformed_polygon = np.array(transformed_polygon)
 
-            normal = self.get_normal_newell(transformed_polygon)[0]
+            normal = self.get_normal(transformed_polygon)[0]
             poly_2d = np.zeros((transformed_polygon.shape[0], 2))
             for i, vertex in enumerate(transformed_polygon):
                 xy = self.to_2d(vertex, normal)
@@ -66,29 +65,46 @@ class Building:
         self.polygons = polygons
 
     # 3つ以上の点を渡して、ポリゴンの法線を求める
-    def get_normal_newell(self, poly):
-        n = np.array([0.0, 0.0, 0.0], dtype=np.float64)
+    @staticmethod
+    def get_normal(poly):
+        normal = np.array([0.0, 0.0, 0.0], dtype=np.float64)
 
-        for i, p in enumerate(poly):
-            ne = i + 1
-            if ne == len(poly):
-                ne = 0
-            n[0] += (poly[i][1] - poly[ne][1]) * (poly[i][2] + poly[ne][2])
-            n[1] += (poly[i][2] - poly[ne][2]) * (poly[i][0] + poly[ne][0])
-            n[2] += (poly[i][0] - poly[ne][0]) * (poly[i][1] + poly[ne][1])
+        for i, _ in enumerate(poly):
+            next_index = i + 1
 
-        if (n == np.array([0.0, 0.0, 0.0])).all():
-            return (n, False)
-        n = n / math.sqrt(n[0] * n[0] + n[1] * n[1] + n[2] * n[2])
-        return (n, True)
+            if next_index == len(poly):
+                next_index = 0
+
+            point_1 = poly[i]
+            point_1_x = point_1[0]
+            point_1_y = point_1[1]
+            point_1_z = point_1[2]
+
+            point_2 = poly[next_index]
+            point_2_x = point_2[0]
+            point_2_y = point_2[1]
+            point_2_z = point_2[2]
+
+            normal[0] += (point_1_y - point_2_y) * (point_1_z + point_2_z)
+            normal[1] += (point_1_z - point_2_z) * (point_1_x + point_2_x)
+            normal[2] += (point_1_x - point_2_x) * (point_1_y + point_2_y)
+
+        if (normal == np.array([0.0, 0.0, 0.0])).all():
+            return (normal, False)
+
+        normal = normal / math.sqrt(
+            normal[0] * normal[0] + normal[1] * normal[1] + normal[2] * normal[2]
+        )
+        return (normal, True)
 
     # 面と法線を渡して、2次元の座標に変換する
-    def to_2d(self, p, n):
+    @staticmethod
+    def to_2d(p, n):
         x3 = np.array([1.1, 1.1, 1.1])
+
         if (n == x3).all():
             x3 += np.array([1, 2, 3])
         x3 = x3 - np.dot(x3, n) * n
-
         x3 /= math.sqrt((x3**2).sum())
         y3 = np.cross(n, x3)
         return (np.dot(p, x3), np.dot(p, y3))
