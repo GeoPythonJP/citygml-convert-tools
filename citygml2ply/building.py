@@ -36,6 +36,7 @@ class Building:
     def create_triangle_meshes(self, polygons):
         for poly in polygons:
             transformed_polygon = [self.transform_coordinate(*x) for x in poly]
+            transformed_polygon = transformed_polygon[::-1]
             transformed_polygon = np.array(transformed_polygon)
 
             normal = self.get_normal_newell(transformed_polygon)[0]
