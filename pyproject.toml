@@ -23,9 +23,51 @@ geopandas = "^0.12.1"
 cesiumpy = "^0.3.3"
 geopy = "2.0.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^5.2"
+black = "^22.10.0"
+isort = "^5.10.1"
+pyproject-flake8 = "^5.0.4.post1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.flake8]
+max-line-length = 120
+max-complexity = 18
+extend-ignore = "E203, E266, W503,"
+
+[tool.black]
+line-length = 120
+target-version = ['py39']  # Pythonのバージョン
+include = '\.py$'  # 対象ファイル
+# skip-string-normalization = true  # ''を""に変換しない設定(好みで変えてください)
+
+# フォーマットしないファイル
+exclude = '''
+(
+      \.eggs
+    | \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | venv
+    | \.idea
+    | \.vscode
+    | \.pytest_cache
+    | _build
+    | buck-out
+    | build
+    | dist
+    | migrations
+    | data
+    | contrib
+    | output
+)
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 120
+skip_glob = "*/migrations/*.py"
