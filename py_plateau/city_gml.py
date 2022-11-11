@@ -114,11 +114,10 @@ class CityGml:
             self.obj_buildings.append(obj_building)
 
     def write_ply(self, output_path):
-        basedir = Path(os.path.dirname(os.path.abspath(__file__)))
+        os.makedirs(output_path, exist_ok=True)
         for index, obj_building in enumerate(self.obj_buildings):
             triangle_mesh = obj_building.get_triangle_mesh()
             pathname = os.path.join(
-                basedir,
                 output_path,
                 f"{self.mesh_code}_{self.object_name}_{self.to_srid}_{index:02}.ply",
             )
