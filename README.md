@@ -39,15 +39,15 @@ Modules
 * [earcut-python](https://github.com/joshuaskelly/earcut-python)
 * [AcculusSasao/plateaupy](https://github.com/AcculusSasao/plateaupy)
 * [ksasao/PlateauCityGmlSharp](https://github.com/ksasao/PlateauCityGmlSharp/)
+* [cityjson/cjio](https://github.com/cityjson/cjio)
 
-#### 単調多角形を三角形分割する手法(耳刈り取り法)
-```
-$ git submodule add https://github.com/joshuaskelly/earcut-python.git citygml2ply/contrib/earcutpython
-```
 
 Contributors
 ---
-* [homata](http://github.com/homata)
+| GitHub                                          | Twitter                                           | 
+|-------------------------------------------------|---------------------------------------------------| 
+| [homata](http://github.com/homata)              | [@homata](https://twitter.com/homata)             |
+| [nokonoko1203](https://github.com/nokonoko1203) | [@nokonoko_1203](https://qiita.com/nokonoko_1203) |
 
 CityGMLビューワー
 ---
