@@ -6,7 +6,7 @@ import math
 import numpy as np
 import open3d as o3d
 import pyproj
-from contrib.earcutpython.earcut.earcut import earcut
+from earcut import earcut
 
 
 class Building:
