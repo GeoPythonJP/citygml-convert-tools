@@ -6,8 +6,9 @@ from pathlib import Path
 
 import numpy as np
 import open3d as o3d
-from building import Building
 from lxml import etree
+
+from .building import Building
 
 
 def str2floats(x):
