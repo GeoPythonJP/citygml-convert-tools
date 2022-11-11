@@ -44,10 +44,10 @@ Modules
 
 Contributors
 ---
-| GitHub                                          | Twitter                                           | 
-|-------------------------------------------------|---------------------------------------------------| 
-| [homata](http://github.com/homata)              | [@homata](https://twitter.com/homata)             |
-| [nokonoko1203](https://github.com/nokonoko1203) | [@nokonoko_1203](https://qiita.com/nokonoko_1203) |
+| GitHub                                          | Twitter                                             | 
+|-------------------------------------------------|-----------------------------------------------------| 
+| [homata](http://github.com/homata)              | [@homata](https://twitter.com/homata)               |
+| [nokonoko1203](https://github.com/nokonoko1203) | [@nokonoko_1203](https://twitter.com/nokonoko_1203) |
 
 CityGMLビューワー
 ---
