@@ -5,7 +5,7 @@ import argparse
 import os
 import traceback
 
-from city_gml import CityGml
+from py_plateau.city_gml import CityGml
 
 if __name__ == "__main__":
     try:
