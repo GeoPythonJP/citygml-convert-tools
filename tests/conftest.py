@@ -1,15 +1,13 @@
-import pytest
-import shutil
-
 import os
+import shutil
+from pathlib import Path
 
 import pytest
-from pathlib import Path
 
 OUTPUT = "output"
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def scope_session():
     # OUTPUT ディレクトリ削除
     basedir = Path(os.path.dirname(os.path.abspath(__file__)))

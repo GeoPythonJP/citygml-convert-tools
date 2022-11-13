@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import filecmp
 import os
-
-import pytest
 from pathlib import Path
 
-from py_plateau.city_gml import CityGml, Subset
+import pytest
 
-import filecmp
+from py_plateau.city_gml import CityGml, Subset
 
 DATA = "data"
 OUTPUT = "output"
@@ -16,7 +15,7 @@ ANSWER = "answer"
 
 
 def test_geojson_lod0():
-    """ GeoJSON LOD0 """
+    """GeoJSON LOD0"""
     # ベースディレクトリ
     basedir = Path(os.path.dirname(os.path.abspath(__file__)))
     pathname = os.path.join(basedir, DATA, "53392633_bldg_6697_2_op.gml")
@@ -33,7 +32,7 @@ def test_geojson_lod0():
 
 
 def test_geojson_lod1():
-    """ GeoJSON LOD1 """
+    """GeoJSON LOD1"""
     # ベースディレクトリ
     basedir = Path(os.path.dirname(os.path.abspath(__file__)))
     pathname = os.path.join(basedir, DATA, "53392633_bldg_6697_2_op.gml")
@@ -50,7 +49,7 @@ def test_geojson_lod1():
 
 
 def test_geojson_lod2():
-    """ GeoJSON LOD1 """
+    """GeoJSON LOD1"""
     # ベースディレクトリ
     basedir = Path(os.path.dirname(os.path.abspath(__file__)))
     pathname = os.path.join(basedir, DATA, "53392633_bldg_6697_2_op.gml")

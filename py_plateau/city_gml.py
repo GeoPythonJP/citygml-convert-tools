@@ -2,18 +2,18 @@
 # coding: utf-8
 
 import os
-from pathlib import Path
-
-import numpy as np
-import open3d as o3d
-import lxml
-from lxml import etree
 import traceback
 from enum import Enum
+from pathlib import Path
+
+import geopandas as gpd
+import lxml
+import numpy as np
+import open3d as o3d
+from lxml import etree
+from shapely.geometry import MultiPolygon, Polygon
 
 from .building import Building
-import geopandas as gpd
-from shapely.geometry import Polygon, MultiPolygon
 
 
 class Subset(Enum):
@@ -65,23 +65,26 @@ class CityGml:
         properties = dict()
         try:
             # bldg:Building attribute=>gml:id
-            attrib_id = "{%s}id" % nsmap['gml']
+            attrib_id = "{%s}id" % nsmap["gml"]
             if attrib_id in building.attrib:
                 properties["id"] = building.attrib[attrib_id]
 
             # gen:stringAttribute
-            string_attributes = building.xpath('gen:stringAttribute', namespaces=nsmap)
+            string_attributes = building.xpath("gen:stringAttribute", namespaces=nsmap)
             for string_attribute in string_attributes:
-                properties[string_attribute.attrib['name']] = string_attribute.getchildren()[0].text
+                properties[string_attribute.attrib["name"]] = string_attribute.getchildren()[0].text
 
             # bldg:measuredHeight
-            measured_heights = building.xpath('bldg:measuredHeight', namespaces=nsmap)
+            measured_heights = building.xpath("bldg:measuredHeight", namespaces=nsmap)
             if len(measured_heights) > 0:
                 properties["measured_height_uom"] = measured_heights[0].attrib["uom"]
                 properties["measured_height"] = float(measured_heights[0].text)
 
             # bldg:address
-            addresses = building.xpath('bldg:address/core:Address/core:xalAddress/xAL:AddressDetails/xAL:Country/xAL:Locality/xAL:LocalityName', namespaces=nsmap)
+            addresses = building.xpath(
+                "bldg:address/core:Address/core:xalAddress/xAL:AddressDetails/xAL:Country/xAL:Locality/xAL:LocalityName",
+                namespaces=nsmap,
+            )
             if len(addresses) > 0:
                 properties["address_type"] = addresses[0].attrib["Type"]
                 properties["address"] = addresses[0].text
@@ -101,9 +104,7 @@ class CityGml:
         self.lod = 0
 
         # scan cityObjectMember
-        buildings = tree.xpath(
-            "/core:CityModel/core:cityObjectMember/bldg:Building", namespaces=nsmap
-        )
+        buildings = tree.xpath("/core:CityModel/core:cityObjectMember/bldg:Building", namespaces=nsmap)
         for building in buildings:
             obj_building = Building(self.from_srid, self.to_srid, self.lonlat)
 
@@ -132,9 +133,7 @@ class CityGml:
         self.lod = 1
 
         # scan cityObjectMember
-        buildings = tree.xpath(
-            "/core:CityModel/core:cityObjectMember/bldg:Building", namespaces=nsmap
-        )
+        buildings = tree.xpath("/core:CityModel/core:cityObjectMember/bldg:Building", namespaces=nsmap)
         for building in buildings:
             obj_building = Building(self.from_srid, self.to_srid, self.lonlat)
 
@@ -163,9 +162,7 @@ class CityGml:
         self.lod = 2
 
         # scan cityObjectMember
-        buildings = tree.xpath(
-            "/core:CityModel/core:cityObjectMember/bldg:Building", namespaces=nsmap
-        )
+        buildings = tree.xpath("/core:CityModel/core:cityObjectMember/bldg:Building", namespaces=nsmap)
         for building in buildings:
             obj_building = Building(self.from_srid, self.to_srid, self.lonlat)
 
@@ -183,9 +180,7 @@ class CityGml:
             for polygon_xpath in polygon_xpaths:
                 poslist_xpaths = building.xpath(polygon_xpath, namespaces=nsmap)
                 for poslist_xpath in poslist_xpaths:
-                    vals = poslist_xpath.xpath(
-                        "gml:exterior/gml:LinearRing/gml:posList", namespaces=nsmap
-                    )
+                    vals = poslist_xpath.xpath("gml:exterior/gml:LinearRing/gml:posList", namespaces=nsmap)
                     vals_list.extend(vals)
 
             polygons = [str2floats(v).reshape((-1, 3)) for v in vals_list]
@@ -234,5 +229,7 @@ class CityGml:
 
         # save GeoJSON by geopandas
         gdf_data = gpd.GeoDataFrame(buildings, crs=f"EPSG:{self.to_srid}")
-        pathname = os.path.join(output_path, f"{self.mesh_code}_{self.object_name}_{self.to_srid}_lod{self.lod}.geojson")
+        pathname = os.path.join(
+            output_path, f"{self.mesh_code}_{self.object_name}_{self.to_srid}_lod{self.lod}.geojson"
+        )
         gdf_data.to_file(pathname, driver="GeoJSON")
