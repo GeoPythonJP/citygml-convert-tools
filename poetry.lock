@@ -1874,7 +1874,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "2c80cd1fac497189bb84ff3a432bf4f8ea3aa7c5356d7017b8214a895f11bb4a"
+content-hash = "153594a7cd462ee9611df4432adabff1839b02582521519c891b6f6fd3e53d26"
 
 [metadata.files]
 addict = [

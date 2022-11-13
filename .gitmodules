@@ -1,3 +1,0 @@
-[submodule "citygml2ply/contrib/earcutpython"]
-	path = citygml2ply/contrib/earcutpython
-	url = https://github.com/joshuaskelly/earcut-python.git

@@ -13,25 +13,49 @@ from .earcut import earcut
 class Building:
     """bldg:Building"""
 
-    def __init__(self, from_srid="6697", to_srid="6677"):
+    def __init__(self, from_srid="6697", to_srid="6677", lonlat=False):
         # super().__init__()
         self.polygons = []
+        self.properties = None
 
         self.vertices = []
         self.triangles = []
         self.triangle_meshes = []
+
+        self.lonlat = lonlat
 
         # pyproj.Transformer.from_crs(<変換元座標系>, <変換先座標系> [, always_xy])
         self.transformer = pyproj.Transformer.from_crs(
             f"epsg:{from_srid}", f"epsg:{to_srid}"
         )
 
+    def get_properties(self):
+        return self.properties
+
+    def set_properties(self, properties):
+        self.properties = properties
+
+    def get_vertices(self):
+        return self.vertices
+
     def get_triangle_mesh(self):
         return self.triangle_meshes
 
     def transform_coordinate(self, latitude, longitude, height):
         xx, yy, zz = self.transformer.transform(latitude, longitude, height)
-        return np.array([xx, yy, zz])
+        if self.lonlat:
+            return np.array([yy, xx, zz])
+        else:
+            return np.array([xx, yy, zz])
+
+    def create_vertices(self, polygons):
+        self.polygons = polygons
+        self.vertices = []
+
+        for plist in polygons:
+            vertices = [self.transform_coordinate(*x) for x in plist]
+            if len(vertices) > 0:
+                self.vertices.append(vertices)
 
     def create_triangle_meshes(self, polygons):
         for poly in polygons:
@@ -46,7 +70,7 @@ class Building:
                 xy = self.to_2d(vertex, normal)
                 poly_2d[i] = xy
 
-            vertices_earcut = earcut(np.array(poly_2d, dtype=np.int).flatten(), dim=2)
+            vertices_earcut = earcut(np.array(poly_2d, dtype=np.int64).flatten(), dim=2)
 
             if len(vertices_earcut) > 0:
                 vertices_length = len(self.vertices)
