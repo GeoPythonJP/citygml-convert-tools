@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import os
-
-import pytest
-from pathlib import Path
-
-from py_plateau.city_gml import CityGml, Subset
-
 import filecmp
 import glob
+import os
+from pathlib import Path
+
+import pytest
+
+from py_plateau.city_gml import CityGml, Subset
 
 DATA = "data"
 OUTPUT = "output"
@@ -17,7 +16,7 @@ ANSWER = "answer"
 
 
 def test_ply_lod0():
-    """ PLY LOD0 """
+    """PLY LOD0"""
     # ベースディレクトリ
     basedir = Path(os.path.dirname(os.path.abspath(__file__)))
     pathname = os.path.join(basedir, DATA, "53392633_bldg_6697_2_op.gml")
@@ -42,7 +41,7 @@ def test_ply_lod0():
 
 
 def test_ply_lod1():
-    """ PLY LOD1 """
+    """PLY LOD1"""
     # ベースディレクトリ
     basedir = Path(os.path.dirname(os.path.abspath(__file__)))
     pathname = os.path.join(basedir, DATA, "53392633_bldg_6697_2_op.gml")
@@ -67,7 +66,7 @@ def test_ply_lod1():
 
 
 def test_ply_lod2():
-    """ PLY LOD2 """
+    """PLY LOD2"""
     # ベースディレクトリ
     basedir = Path(os.path.dirname(os.path.abspath(__file__)))
     pathname = os.path.join(basedir, DATA, "53392633_bldg_6697_2_op.gml")
