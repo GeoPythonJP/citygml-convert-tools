@@ -160,3 +160,40 @@ TBD
 関連情報のメモ
 * [Geo関連情報のメモ](./GEOMEMO.md)
 
+### about py_plateau module
+
+#### Features
+
+- リポジトリルートに配置されているmain.pyを利用することで、py_plateauモジュールを利用したCityGMLの変換が可能
+- 以下の機能が利用可能
+  - PLYファイルへの変換
+  - 建物(bldg)のみ対応
+  - LOD0, LOD1, LOD2対応
+  - テクスチャは非対応
+
+#### Usage
+
+```
+$ python main.py -h
+
+usage: main.py [-h] [-output OUTPUT] -to_srid TO_SRID [-lod LOD] filename
+
+CityGML to PLY convert
+
+positional arguments:
+  filename              input CityGML filename
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -output OUTPUT, --output OUTPUT
+                        output path name
+  -to_srid TO_SRID, --to_srid TO_SRID
+                        SRID(EPSG)
+  -lod LOD, --lod LOD   output lod type 0:lod0 1:lod1 2:lod2
+```
+
+### Examples
+
+```
+$ python main.py 53392633_bldg_6697_2_op.gml --lod=2 --to_srid=6677
+```
