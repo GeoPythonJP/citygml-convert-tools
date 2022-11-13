@@ -2,36 +2,42 @@
 # coding: utf-8
 
 import argparse
+import click
 import os
 import traceback
 
+import py_plateau
 from py_plateau.city_gml import CityGml
 
-if __name__ == "__main__":
+
+@click.group(help=f'citygml convert tools v{py_plateau.__version__}')
+@click.version_option(version=py_plateau.__version__, message="citygml convert tools v%(version)s")
+@click.option('--debug/--no-debug', default=False)
+@click.option('--verbose', default=False, is_flag=True)
+@click.pass_context
+def main(context, debug, verbose):
+    context.obj = dict(debug=debug, verbose=verbose)
+
+
+@main.command(help='Convert CityGML file to PLY file')
+@click.argument('filename', type=click.Path(exists=True))   # input CityGML file name
+@click.option('-o', '--output', 'output_path', default='output', help='output path name')
+@click.option('-s', '--to-srid', 'to_srid', default='6677', help='output SRID(EPSG)')
+@click.option('-l', '--lod', 'lod', default=2, type=click.IntRange(0, 2), help='output lod type')
+@click.pass_context
+def ply(context, filename, output_path, to_srid, lod):
+
     try:
-        parser = argparse.ArgumentParser(description="CityGML to PLY convert")
-
-        parser.add_argument("filename", help="input CityGML filename")
-        parser.add_argument(
-            "-output", "--output", default="output", help="output path name"
-        )
-        parser.add_argument(
-            "-to_srid", "--to_srid", default="6677", required=True, help="SRID(EPSG)"
-        )
-        parser.add_argument(
-            "-lod",
-            "--lod",
-            default=2,
-            type=int,
-            help="output lod type 0:lod0 1:lod1 2:lod2",
-        )
-
-        args = parser.parse_args()
-
-        filename = args.filename  # e.g. 53392633_bldg_6697_2_op
-        output_path = args.output  # default = 'output'
-        to_srid = args.to_srid  # defalt = '6677'
-        lod = args.lod  # defalt = 2
+        if context.obj["verbose"]:
+            click.echo(f'\nConvert CityGML file to PLY file\n')
+            click.echo(f' Options:')
+            click.echo(f'  debug={context.obj["debug"]}')
+            click.echo(f'  verbose={context.obj["verbose"]}')
+            click.echo(f'  filename={filename}')
+            click.echo(f'  output_path={output_path}')
+            click.echo(f'  to_srid={to_srid}')
+            click.echo(f'  lod={lod}')
+            click.echo(f'\n')
 
         obj_city_gml = CityGml(filename, to_srid)
         if lod == 0:
@@ -49,3 +55,7 @@ if __name__ == "__main__":
     except Exception as e:
         print(e)
         traceback.print_exc()
+
+
+if __name__ == "__main__":
+    main()
