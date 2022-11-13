@@ -3,10 +3,7 @@
 
 import pytest
 from pytest import approx
-
-import sys
-sys.path.append('../')
-from building import Building
+from py_plateau.building import Building
 
 line_HNAP0664_b_0 = [
 	[35.533096948566886, 139.7963519674318, 3.66410811],

@@ -10,22 +10,99 @@ XMLベースで定義されているCityGMLは、中間データフォーマッ�
 コードは出来るだけシンプルにしたかったので、サンプルコードとしてバッサリとコードは簡潔にしてます。  
 エラー処理やテスト等も省略している部分があります。何かの参考にしていただければ幸いです  
 
-## Tools
-* [citygml2ply](./citygml2ply/README.md) : CityGMLYファイル → PLYファイル変換 
-* [citygml2geojson](./citygml2geojson/README.md): CityGMLYファイル → GeoJSONファイル変換
+### about py_plateau module
 
-## Changelog
-see the [changelog](./CHANGELOG.md).
+#### Features
+
+- リポジトリルートに配置されているmain.pyを利用することで、py_plateauモジュールを利用したCityGMLの変換が可能
+- 以下の機能が利用可能
+  - CityGMLファイル → PLYファイル変換
+  - CityGMLファイル → GeoJSONファイル変換
+  - 建物(bldg)のみ対応
+  - LOD0, LOD1, LOD2対応
+  - テクスチャは非対応
+  - [緯度経度]、[経度緯度]の変換対応
+
+※1 2D座標系に変換する場合も3D座標で[longitude, latitude, height]に変換します
+
+#### Usage
+
+##### Main
+
+```
+$ python main.py --help
+Usage: main.py [OPTIONS] COMMAND [ARGS]...
+
+  citygml convert tools v0.0.1
+
+Options:
+  --version                 Show the version and exit.
+  -d, --debug / --no-debug  debug mode
+  -v, --verbose             verbose mode
+  --help                    Show this message and exit.
+
+Commands:
+  geojson  Convert CityGML file to GeoJSON file
+  ply      Convert CityGML file to PLY file
+```
+
+##### CityGMLファイル → PLYファイル変換 
+```
+$ python .\main.py ply --help
+Usage: main.py ply [OPTIONS] FILENAME
+
+  Convert CityGML file to PLY file
+
+Options:
+  -o, --output TEXT        output path name
+  -s, --to-srid TEXT       output SRID(EPSG)
+  -l, --lod INTEGER RANGE  output lod type  [0<=x<=2]
+  --help                   Show this message and exit.
+```
+Examples
+```
+$ python main.py ply 53392633_bldg_6697_2_op.gml --lod=2 --to-srid=6677
+```
+
+##### CityGMLファイル → GeoJSONファイル変換 
+```
+$ python .main.py geojson --help
+
+Usage: man.py geojson [OPTIONS] FILENAME
+
+  Convert CityGML file to GeoJSON file
+
+Options:
+  -o, --output TEXT        output path name
+  -s, --to-srid TEXT       output SRID(EPSG)
+  -l, --lod INTEGER RANGE  output lod type  [0<=x<=2]
+  -lonlat, --lonlat        swap lon lat order
+  --help                   Show this message and exit.
+```
+
+Examples
+```
+$ python main.py geojson 53392633_bldg_6697_2_op.gml --lod=2 --to-srid=4326
+```
 
 Installation
 ---
 Pythonと[poetry](https://python-poetry.org/)を利用します。
 
 ```
-$ git clone --recursive git@github.com:GeoPythonJP/citygml-convert-tools.git
+$ git clone git@github.com:GeoPythonJP/citygml-convert-tools.git
 $ poetry install
 $ poetry shell
 ```
+
+Changelog
+---
+see the [changelog](./CHANGELOG.md).
+
+
+Tests Data
+---
+[3D都市モデル（Project PLATEAU）東京都23区](https://www.geospatial.jp/ckan/dataset/plateau-tokyo23ku)のCityGMLの東京都大田区羽田空港三丁目データ ”53392633_bldg_6697_2_op.gml” のみで動作確認
 
 License
 ---
@@ -37,6 +114,7 @@ Modules
 下記のモジュールを参考、使用しています。
 各々のライセンスに従ってください。
 * [earcut-python](https://github.com/joshuaskelly/earcut-python)
+  * earcut.py
 * [AcculusSasao/plateaupy](https://github.com/AcculusSasao/plateaupy)
 * [ksasao/PlateauCityGmlSharp](https://github.com/ksasao/PlateauCityGmlSharp/)
 * [cityjson/cjio](https://github.com/cityjson/cjio)
@@ -159,41 +237,3 @@ TBD
 
 関連情報のメモ
 * [Geo関連情報のメモ](./GEOMEMO.md)
-
-### about py_plateau module
-
-#### Features
-
-- リポジトリルートに配置されているmain.pyを利用することで、py_plateauモジュールを利用したCityGMLの変換が可能
-- 以下の機能が利用可能
-  - PLYファイルへの変換
-  - 建物(bldg)のみ対応
-  - LOD0, LOD1, LOD2対応
-  - テクスチャは非対応
-
-#### Usage
-
-```
-$ python main.py -h
-
-usage: main.py [-h] [-output OUTPUT] -to_srid TO_SRID [-lod LOD] filename
-
-CityGML to PLY convert
-
-positional arguments:
-  filename              input CityGML filename
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -output OUTPUT, --output OUTPUT
-                        output path name
-  -to_srid TO_SRID, --to_srid TO_SRID
-                        SRID(EPSG)
-  -lod LOD, --lod LOD   output lod type 0:lod0 1:lod1 2:lod2
-```
-
-### Examples
-
-```
-$ python main.py 53392633_bldg_6697_2_op.gml --lod=2 --to_srid=6677
-```
