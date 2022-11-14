@@ -89,9 +89,47 @@ class CityGml:
             if len(addresses) > 0:
                 properties["address_type"] = addresses[0].attrib["Type"]
                 properties["address"] = addresses[0].text
-            else:
-                properties["address_type"] = ""
-                properties["address"] = ""
+
+            # uro:buildingRoofEdgeArea
+            building_roof_edge_area = building.xpath(
+                "uro:buildingDetails/uro:BuildingDetails/uro:buildingRoofEdgeArea",
+                namespaces=nsmap,
+            )
+            if len(building_roof_edge_area) > 0:
+                properties["building_roof_edge_area_uom"] = building_roof_edge_area[0].attrib["uom"]
+                properties["building_roof_edge_area"] = float(building_roof_edge_area[0].text)
+
+            # uro:districtsAndZonesType
+            districts_and_zones_type = building.xpath(
+                "uro:buildingDetails/uro:BuildingDetails/uro:districtsAndZonesType",
+                namespaces=nsmap,
+            )
+            if len(districts_and_zones_type) > 0:
+                properties["districts_and_zones_type"] = districts_and_zones_type[0].text
+
+            # uro:prefecture
+            prefecture = building.xpath(
+                "uro:buildingDetails/uro:BuildingDetails/uro:prefecture",
+                namespaces=nsmap,
+            )
+            if len(prefecture) > 0:
+                properties["prefecture"] = prefecture[0].text
+
+            # uro:city
+            city = building.xpath(
+                "uro:buildingDetails/uro:BuildingDetails/uro:city",
+                namespaces=nsmap,
+            )
+            if len(city) > 0:
+                properties["city"] = city[0].text
+
+            # uro:surveyYear
+            survey_year = building.xpath(
+                "uro:buildingDetails/uro:BuildingDetails/uro:surveyYear",
+                namespaces=nsmap,
+            )
+            if len(survey_year) > 0:
+                properties["survey_year"] = survey_year[0].text
 
         except lxml.etree.XPathEvalError as e:
             print(e)
@@ -247,7 +285,7 @@ class CityGml:
             building_data["geometry"] = MultiPolygon(polygons)
 
             # add properties
-            building_data["filename"] = self.basename
+            building_data["filename"] = os.path.basename(self.filename)
             building_data["mesh_code"] = self.mesh_code
             building_data["object"] = self.object_name
 
