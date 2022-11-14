@@ -12,9 +12,15 @@ XMLベースで定義されているCityGMLは、中間データフォーマッ�
 
 ### about py_plateau module
 
+```
+$ python cct.py --version     
+
+CityGML convert tools (CCT) v0.0.1
+```
+
 #### Features
 
-- リポジトリルートに配置されているmain.pyを利用することで、py_plateauモジュールを利用したCityGMLの変換が可能
+- リポジトリルートに配置されているcct.pyを利用することで、py_plateauモジュールを利用したCityGMLの変換が可能
 - 以下の機能が利用可能
   - CityGMLファイル → PLYファイル変換
   - CityGMLファイル → GeoJSONファイル変換
@@ -22,6 +28,7 @@ XMLベースで定義されているCityGMLは、中間データフォーマッ�
   - LOD0, LOD1, LOD2対応
   - テクスチャは非対応
   - [緯度経度]、[経度緯度]の変換対応
+  - 建物(bldg)分割
 
 ※1 2D座標系に変換する場合も3D座標で[longitude, latitude, height]に変換します
 
@@ -30,10 +37,11 @@ XMLベースで定義されているCityGMLは、中間データフォーマッ�
 ##### Main
 
 ```
-$ python main.py --help
-Usage: main.py [OPTIONS] COMMAND [ARGS]...
+$ python cct.py --help
 
-  citygml convert tools v0.0.1
+Usage: cct.py [OPTIONS] COMMAND [ARGS]...
+
+  CityGML convert tools (CCT) v0.0.1
 
 Options:
   --version                 Show the version and exit.
@@ -48,8 +56,9 @@ Commands:
 
 ##### CityGMLファイル → PLYファイル変換 
 ```
-$ python .\main.py ply --help
-Usage: main.py ply [OPTIONS] FILENAME
+$ python cct.py ply --help
+
+Usage: cct.py ply [OPTIONS] FILENAME
 
   Convert CityGML file to PLY file
 
@@ -57,18 +66,20 @@ Options:
   -o, --output TEXT        output path name
   -s, --to-srid TEXT       output SRID(EPSG)
   -l, --lod INTEGER RANGE  output lod type  [0<=x<=2]
+  -sp, --separate          separate the building data
   --help                   Show this message and exit.
 ```
+
 Examples
 ```
-$ python main.py ply 53392633_bldg_6697_2_op.gml --lod=2 --to-srid=6677
+$ python cct.py ply 53392633_bldg_6697_2_op.gml --lod=2 --to-srid=6677
 ```
 
 ##### CityGMLファイル → GeoJSONファイル変換 
 ```
-$ python .main.py geojson --help
+$ python cct.py geojson --help
 
-Usage: man.py geojson [OPTIONS] FILENAME
+Usage: cct.py geojson [OPTIONS] FILENAME
 
   Convert CityGML file to GeoJSON file
 
@@ -76,13 +87,14 @@ Options:
   -o, --output TEXT        output path name
   -s, --to-srid TEXT       output SRID(EPSG)
   -l, --lod INTEGER RANGE  output lod type  [0<=x<=2]
+  -sp, --separate          separate the building data
   -lonlat, --lonlat        swap lon lat order
   --help                   Show this message and exit.
 ```
 
 Examples
 ```
-$ python main.py geojson 53392633_bldg_6697_2_op.gml --lod=2 --to-srid=4326
+$ python cct.py geojson 53392633_bldg_6697_2_op.gml --lod=2 --to-srid=4326
 ```
 
 Installation
