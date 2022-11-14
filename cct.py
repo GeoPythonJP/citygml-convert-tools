@@ -9,8 +9,8 @@ import py_plateau
 from py_plateau.city_gml import CityGml, Subset
 
 
-@click.group(help=f"citygml convert tools v{py_plateau.__version__}")
-@click.version_option(version=py_plateau.__version__, message="citygml convert tools v%(version)s")
+@click.group(help=f"CityGML convert tools (CCT) v{py_plateau.__version__}")
+@click.version_option(version=py_plateau.__version__, message="CityGML convert tools (CCT) v%(version)s")
 @click.option("-d", "--debug/--no-debug", default=False, help="debug mode")
 @click.option("-v", "--verbose", default=False, is_flag=True, help="verbose mode")
 @click.pass_context
@@ -23,9 +23,10 @@ def main(context, debug, verbose):
 @click.option("-o", "--output", "output_path", default="output", help="output path name")
 @click.option("-s", "--to-srid", "to_srid", default="4326", help="output SRID(EPSG)")
 @click.option("-l", "--lod", "lod", default=2, type=click.IntRange(0, 2), help="output lod type")
+@click.option("-sp", "--separate", "separate", default=False, is_flag=True, help="separate the building data")
 @click.option("-lonlat", "--lonlat", "lonlat", default=True, is_flag=True, help="swap lon lat order")
 @click.pass_context
-def geojson(context, filename, output_path, to_srid, lod, lonlat):
+def geojson(context, filename, output_path, to_srid, lod, separate, lonlat):
     """Convert CityGML file to GeoJSON file"""
 
     try:
@@ -38,10 +39,11 @@ def geojson(context, filename, output_path, to_srid, lod, lonlat):
             click.echo(f"  output_path={output_path}")
             click.echo(f"  to_srid={to_srid}")
             click.echo(f"  lod={lod}")
+            click.echo(f"  separate={separate}")
             click.echo(f"  lonlat={lonlat}")
             click.echo(f"\n")
 
-        obj_city_gml = CityGml(filename, Subset.GEOJSON, to_srid, lonlat)
+        obj_city_gml = CityGml(filename, Subset.GEOJSON, to_srid, separate=separate, lonlat=lonlat)
         if lod == 0:
             obj_city_gml.lod0()
         elif lod == 1:
@@ -63,8 +65,9 @@ def geojson(context, filename, output_path, to_srid, lod, lonlat):
 @click.option("-o", "--output", "output_path", default="output", help="output path name")
 @click.option("-s", "--to-srid", "to_srid", default="6677", help="output SRID(EPSG)")
 @click.option("-l", "--lod", "lod", default=2, type=click.IntRange(0, 2), help="output lod type")
+@click.option("-sp", "--separate", "separate", default=False, is_flag=True, help="separate the building data")
 @click.pass_context
-def ply(context, filename, output_path, to_srid, lod):
+def ply(context, filename, output_path, to_srid, lod, separate):
     """Convert CityGML file to PLY file"""
     try:
         if context.obj["verbose"]:
@@ -76,9 +79,10 @@ def ply(context, filename, output_path, to_srid, lod):
             click.echo(f"  output_path={output_path}")
             click.echo(f"  to_srid={to_srid}")
             click.echo(f"  lod={lod}")
+            click.echo(f"  separate={separate}")
             click.echo(f"\n")
 
-        obj_city_gml = CityGml(filename, Subset.PLY, to_srid)
+        obj_city_gml = CityGml(filename, Subset.PLY, to_srid, separate=separate)
         if lod == 0:
             obj_city_gml.lod0()
         elif lod == 1:
