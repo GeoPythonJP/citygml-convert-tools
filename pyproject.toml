@@ -1,9 +1,13 @@
 [tool.poetry]
-name = "citygml-convert-tools"
+name = "cct"
 version = "0.0.1"
-description = "citygml-convert-tools"
+description = "CityGML Convert Tools"
 authors = ["Hiroshi Omata <op.homata@gmail.com>"]
 readme = "README.md"
+packages = [
+    { include = "./*.py" },
+    { include = "py_plateau/*.py" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -33,6 +37,7 @@ pyproject-flake8 = "^5.0.4.post1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
 
 [tool.flake8]
 max-line-length = 120
