@@ -34,9 +34,11 @@ def test_get_textures():
         [0.3808012, 0.3736107],
     ]
 
-    assert textures[0]["image_uri"] == first_image_uri
-    assert list(textures[0]["uv_coords"].keys())[0] == first_poly_id
-    assert np.allclose(textures[0]["uv_coords"][first_poly_id], first_uv_coords)
+    first_texture = textures[0]
+
+    assert first_texture.image_uri == first_image_uri
+    assert list(first_texture.uv_coords.keys())[0] == first_poly_id
+    assert np.allclose(first_texture.uv_coords[first_poly_id], first_uv_coords)
 
     # 最後の要素の画像のファイルパス・id・UV座標を確認
     last_image_uri = "53392633_bldg_6697_appearance/hnap0697.jpg"
@@ -49,6 +51,8 @@ def test_get_textures():
         [0.7234043, 0.6249189],
     ]
 
-    assert textures[-1]["image_uri"] == last_image_uri
-    assert list(textures[-1]["uv_coords"].keys())[-1] == last_poly_id
-    assert np.allclose(textures[-1]["uv_coords"][last_poly_id], last_uv_coords)
+    last_texture = textures[-1]
+
+    assert last_texture.image_uri == last_image_uri
+    assert list(last_texture.uv_coords.keys())[-1] == last_poly_id
+    assert np.allclose(last_texture.uv_coords[last_poly_id], last_uv_coords)
