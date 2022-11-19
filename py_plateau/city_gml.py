@@ -61,6 +61,9 @@ class CityGml:
         # buildings
         self.obj_buildings = []
 
+        # textures
+        self.textures = []
+
     @staticmethod
     def get_bldg_properties(building, nsmap):
         properties = dict()
@@ -136,6 +139,67 @@ class CityGml:
             traceback.print_exc()
 
         return properties
+
+    def get_textures(self):
+        """テクスチャを取得する"""
+        nsmap = self.root.nsmap
+        tree = self.tree
+
+        appearance_member = tree.xpath(
+            "/core:CityModel/app:appearanceMember/app:Appearance/app:surfaceDataMember/app:ParameterizedTexture",
+            namespaces=nsmap,
+        )
+
+        # 画像のURIを取得
+        textures = []
+        for appearance in appearance_member:
+            parameter = {
+                "image_uri": None,
+                "uv_coords": {},
+            }
+
+            # 画像のURIを取得
+            for image_url in appearance.xpath("app:imageURI", namespaces=nsmap):
+                parameter["image_uri"] = image_url.text
+
+            # テクスチャの情報を取得
+            # テクスチャ1枚に対して、複数の面がある
+            # targetは面のID
+            for target in appearance.xpath("app:target", namespaces=nsmap):
+                # 先頭の文字はリンク先を表す「#」なので除去
+                poly_id = target.attrib["uri"][1:]
+
+                # テクスチャのUV座標を取得
+                # 文字列になっているので、floatに変換
+                texture_coordinates = [
+                    str2floats(coordinates).reshape((-1, 2))
+                    for coordinates in target.xpath(
+                        "app:TexCoordList/app:textureCoordinates",
+                        namespaces=nsmap,
+                    )
+                ]
+
+                # 要素数の最大値を取り出す
+                maximum_of_elements = max(map(lambda x: x.shape[0], texture_coordinates))
+
+                # 要素の数が最大値よりも多い時に要素を追加する
+                for coordinate_index, coord in enumerate(texture_coordinates):
+                    num = maximum_of_elements - coord.shape[0]
+
+                    if num > 0:
+                        texture_coordinates[coordinate_index] = np.append(
+                            coord,
+                            np.tile(coord[-1].reshape(-1, 2), (num, 1)),
+                            axis=0,
+                        )
+
+                # テクスチャの座標とURIのペアを格納
+                # 重複して同じ座標が2つ入っていることもあるので、除去
+                parameter["uv_coords"][poly_id] = np.unique(np.array(texture_coordinates), axis=0)[0]
+
+            textures.append(parameter)
+
+        return textures
 
     def set_building_object(self, building, faces):
         """building objectを追加"""
