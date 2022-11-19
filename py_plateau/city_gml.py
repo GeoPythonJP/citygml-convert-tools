@@ -13,7 +13,7 @@ import open3d as o3d
 from lxml import etree
 from shapely.geometry import MultiPolygon, Polygon
 
-from .building import Building
+from .building import Building, BuildingTexture
 
 
 class Subset(Enum):
@@ -153,14 +153,11 @@ class CityGml:
         # 画像のURIを取得
         textures = []
         for appearance in appearance_member:
-            parameter = {
-                "image_uri": None,
-                "uv_coords": {},
-            }
+            texture = BuildingTexture()
 
             # 画像のURIを取得
             for image_url in appearance.xpath("app:imageURI", namespaces=nsmap):
-                parameter["image_uri"] = image_url.text
+                texture.set_image_uri(image_url.text)
 
             # テクスチャの情報を取得
             # テクスチャ1枚に対して、複数の面がある
@@ -195,9 +192,9 @@ class CityGml:
 
                 # テクスチャの座標とURIのペアを格納
                 # 重複して同じ座標が2つ入っていることもあるので、除去
-                parameter["uv_coords"][poly_id] = np.unique(np.array(texture_coordinates), axis=0)[0]
+                texture.set_uv_coords(poly_id, np.unique(np.array(texture_coordinates), axis=0)[0])
 
-            textures.append(parameter)
+            textures.append(texture)
 
         return textures
 
