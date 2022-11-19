@@ -25,6 +25,12 @@ class BuildingTexture:
         """Set UV coordinates"""
         self.uv_coords[poly_id] = uv_coords
 
+    def search_uv_coords(self, poly_id):
+        """Search UV coordinates"""
+        if poly_id in self.uv_coords:
+            return self.uv_coords[poly_id]
+        return None
+
 
 class Building:
     """bldg:Building"""
