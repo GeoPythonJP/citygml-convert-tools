@@ -2,7 +2,7 @@
 # coding: utf-8
 
 import math
-import pdb
+from typing import any
 
 import numpy as np
 import open3d as o3d
@@ -37,9 +37,9 @@ class BuildingPolygon:
     """gml:Polygon"""
 
     def __init__(self, vertices, poly_id):
-        # faceはlat lon zの羅列である文字列
-        self.vertices = vertices
-        self.poly_id = poly_id
+        # self.verticesはlxml.etree._Elementの要素
+        self.vertices: any = vertices
+        self.poly_id: str = poly_id
 
     def _str2floats(self):
         """x y z -> [x, y, z]"""
@@ -98,8 +98,9 @@ class Building:
             if len(vertices) > 0:
                 self.vertices.append(vertices)
 
-    def create_triangle_meshes(self, polygons):
+    def create_triangle_meshes(self, polygons: list):
         for poly in polygons:
+            poly_id = poly.poly_id
             transformed_polygon = [self.transform_coordinate(*x) for x in poly.get_coords()]
             # CityGMLと法線計算時の頂点の取扱順序が異なるため、反転させる
             transformed_polygon = transformed_polygon[::-1]
