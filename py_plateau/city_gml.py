@@ -214,7 +214,7 @@ class CityGml:
         if self.subset == Subset.PLY:
             obj_building.create_triangle_meshes(polys)
         elif self.subset == Subset.GEOJSON:
-            obj_building.create_triangle_meshes(polys)
+            obj_building.create_vertices(polys)
         else:
             raise Exception(f"ERROR: subset = {self.subset}")
 
