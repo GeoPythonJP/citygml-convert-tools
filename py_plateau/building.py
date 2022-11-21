@@ -94,7 +94,7 @@ class Building:
         self.vertices = []
 
         for plist in polygons:
-            vertices = [self.transform_coordinate(*x) for x in plist]
+            vertices = [self.transform_coordinate(*x) for x in plist.get_coords()]
             if len(vertices) > 0:
                 self.vertices.append(vertices)
 
