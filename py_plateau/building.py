@@ -2,7 +2,7 @@
 # coding: utf-8
 
 import math
-from typing import any
+from typing import Any, List
 
 import numpy as np
 import open3d as o3d
@@ -38,7 +38,7 @@ class BuildingPolygon:
 
     def __init__(self, vertices, poly_id):
         # self.verticesはlxml.etree._Elementの要素
-        self.vertices: any = vertices
+        self.vertices: Any = vertices
         self.poly_id: str = poly_id
 
     def _str2floats(self):
