@@ -255,28 +255,34 @@ class CityGml:
         tree = self.tree
         self.lod = 1
 
-        # 面リスト
-        face_list = []
+        # ポリゴンオブジェクトのリスト
+        polygons_list = []
 
         # scan cityObjectMember
         buildings = tree.xpath("/core:CityModel/core:cityObjectMember/bldg:Building", namespaces=nsmap)
         for building in buildings:
             # bldg:lod1Solid
-            vals = building.xpath(
+            faces = building.xpath(
                 "bldg:lod1Solid/gml:Solid/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList",
                 namespaces=nsmap,
             )
 
+            polygons = []
+            for vals in faces:
+                # ポリゴンのオブジェクトを作成
+                poly = BuildingPolygon(vals, None)
+                polygons.append(poly)
+
             # メッシュデータの建物を分割しない and subset ==　PLY
             if (not self.separate) and (self.subset == Subset.PLY):
-                face_list.extend(vals)
+                polygons_list.extend(polygons)
             else:
-                self.set_building_object(building, vals)
+                self.set_building_object(building, polygons)
 
         # メッシュデータの全建物をまとめる？ and Subset.PLY ?
-        if len(face_list):
+        if len(polygons_list):
             building = buildings[0]
-            self.set_building_object(building, face_list)
+            self.set_building_object(building, polygons_list)
 
     def lod2(self):
         nsmap = self.root.nsmap
