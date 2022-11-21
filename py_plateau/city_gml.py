@@ -14,7 +14,7 @@ import open3d as o3d
 from lxml import etree
 from shapely.geometry import MultiPolygon, Polygon
 
-from .building import Building, BuildingTexture
+from .building import Building, BuildingPolygon, BuildingTexture
 
 
 class Subset(Enum):
@@ -294,6 +294,8 @@ class CityGml:
             ]
             faces = []
             poly_ids = []
+            polys = []
+
             for polygon_xpath in polygon_xpaths:
                 poslist_xpaths = building.xpath(polygon_xpath, namespaces=nsmap)
                 for poslist_xpath in poslist_xpaths:
@@ -302,6 +304,10 @@ class CityGml:
 
                     vals = poslist_xpath.xpath("gml:exterior/gml:LinearRing/gml:posList", namespaces=nsmap)
                     faces.extend(vals)
+
+                    # ポリゴンのオブジェクトを作成
+                    poly = BuildingPolygon(vals, poly_id)
+                    polys.append(poly)
 
             # メッシュデータの建物を分割しない and subset ==　PLY
             if (not self.separate) and (self.subset == Subset.PLY):
