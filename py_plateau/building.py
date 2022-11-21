@@ -32,6 +32,14 @@ class BuildingTexture:
         return None
 
 
+class BuildingPolygon:
+    """gml:Polygon"""
+
+    def __init__(self):
+        self.face = ""
+        self.poly_id = ""
+
+
 class Building:
     """bldg:Building"""
 
@@ -78,6 +86,8 @@ class Building:
                 self.vertices.append(vertices)
 
     def create_triangle_meshes(self, polygons):
+        # ここのpolygonsにpoly_idが渡るようにしたい
+        # そうするとこのタイミングでidテクスチャを取得できるようになる
         for poly in polygons:
             transformed_polygon = [self.transform_coordinate(*x) for x in poly]
             # CityGMLと法線計算時の頂点の取扱順序が異なるため、反転させる
