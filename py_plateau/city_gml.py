@@ -225,28 +225,30 @@ class CityGml:
         tree = self.tree
         self.lod = 0
 
-        # 面リスト
-        face_list = []
+        polygons = []
 
         # scan cityObjectMember
         buildings = tree.xpath("/core:CityModel/core:cityObjectMember/bldg:Building", namespaces=nsmap)
         for building in buildings:
             # bldg:lod0RoofEdge
-            faces = building.xpath(
+            vals = building.xpath(
                 "bldg:lod0RoofEdge/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList",
                 namespaces=nsmap,
             )
 
+            poly = BuildingPolygon(*vals, None)
+
             # メッシュデータの建物を分割しない and subset ==　PLY
             if (not self.separate) and (self.subset == Subset.PLY):
-                face_list.extend(faces)
+                polygons.append(poly)
             else:
-                self.set_building_object(building, faces)
+                # set_building_objectは配列が前提なので、配列に入れる
+                self.set_building_object(building, [poly])
 
         # メッシュデータの全建物をまとめる？ and Subset.PLY ?
-        if len(face_list):
+        if len(polygons):
             building = buildings[0]
-            self.set_building_object(building, face_list)
+            self.set_building_object(building, polygons)
 
     def lod1(self):
         nsmap = self.root.nsmap
@@ -260,16 +262,16 @@ class CityGml:
         buildings = tree.xpath("/core:CityModel/core:cityObjectMember/bldg:Building", namespaces=nsmap)
         for building in buildings:
             # bldg:lod1Solid
-            faces = building.xpath(
+            vals = building.xpath(
                 "bldg:lod1Solid/gml:Solid/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList",
                 namespaces=nsmap,
             )
 
             # メッシュデータの建物を分割しない and subset ==　PLY
             if (not self.separate) and (self.subset == Subset.PLY):
-                face_list.extend(faces)
+                face_list.extend(vals)
             else:
-                self.set_building_object(building, faces)
+                self.set_building_object(building, vals)
 
         # メッシュデータの全建物をまとめる？ and Subset.PLY ?
         if len(face_list):
