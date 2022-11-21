@@ -2,9 +2,11 @@
 # coding: utf-8
 
 import math
+import os
 import pdb
 from typing import Any, List
 
+import cv2
 import numpy as np
 import open3d as o3d
 import pyproj
@@ -32,6 +34,19 @@ class BuildingTexture:
         if poly_id in self.uv_coords:
             return self.uv_coords[poly_id]
         return None
+
+    def convert_image(self, ext=".png", basedir="./"):
+        """Convert image"""
+        texture_dir_name = self.image_uri.split("/")[0]
+        texture_file_name = self.image_uri.split("/")[1]
+
+        converted_file_name = texture_file_name.split(".")[0] + ext
+
+        input_file_path = os.path.join(basedir, self.image_uri)
+        img = cv2.imread(input_file_path)
+
+        output_file_path = os.path.join(basedir, texture_dir_name, converted_file_name)
+        cv2.imwrite(output_file_path, img)
 
 
 class BuildingPolygon:
