@@ -199,30 +199,7 @@ class CityGml:
 
         return textures
 
-    def set_building_object(self, building, faces):
-        """building objectを追加"""
-        obj_building = Building(self.from_srid, self.to_srid, self.lonlat)
-
-        # set properties
-        properties = self.get_bldg_properties(building, self.root.nsmap)
-        obj_building.set_properties(properties)
-
-        # set textures
-        textures = self.get_textures()
-        obj_building.set_textures(textures)
-
-        polygons = [str2floats(face_str).reshape((-1, 3)) for face_str in faces]
-
-        if self.subset == Subset.PLY:
-            obj_building.create_triangle_meshes(polygons)
-        elif self.subset == Subset.GEOJSON:
-            obj_building.create_vertices(polygons)
-        else:
-            raise Exception(f"ERROR: subset = {self.subset}")
-
-        self.obj_buildings.append(obj_building)
-
-    def set_building_object_with_polygon_object(self, building, polys):
+    def set_building_object(self, building, polys):
         """building objectを追加"""
         obj_building = Building(self.from_srid, self.to_srid, self.lonlat)
 
@@ -235,9 +212,9 @@ class CityGml:
         obj_building.set_textures(textures)
 
         if self.subset == Subset.PLY:
-            obj_building.create_triangle_meshes_and_texture(polys)
+            obj_building.create_triangle_meshes(polys)
         elif self.subset == Subset.GEOJSON:
-            obj_building.create_triangle_meshes_and_texture(polys)
+            obj_building.create_triangle_meshes(polys)
         else:
             raise Exception(f"ERROR: subset = {self.subset}")
 
@@ -304,10 +281,8 @@ class CityGml:
         tree = self.tree
         self.lod = 2
 
-        # 面リスト
-        face_list = []
-        # ポリゴンのリスト
-        polygon_list = []
+        # ポリゴンオブジェクトのリスト
+        polygons_list = []
 
         # scan cityObjectMember
         buildings = tree.xpath("/core:CityModel/core:cityObjectMember/bldg:Building", namespaces=nsmap)
@@ -318,38 +293,29 @@ class CityGml:
                 "bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon",
                 "bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon",
             ]
-            faces = []
-            poly_ids = []
-            polys = []
 
+            polygons = []
             for polygon_xpath in polygon_xpaths:
                 poslist_xpaths = building.xpath(polygon_xpath, namespaces=nsmap)
                 for poslist_xpath in poslist_xpaths:
                     poly_id = poslist_xpath.attrib["{%s}id" % nsmap["gml"]]
-                    poly_ids.append(poly_id)
 
                     vals = poslist_xpath.xpath("gml:exterior/gml:LinearRing/gml:posList", namespaces=nsmap)
-                    faces.extend(vals)
 
                     # ポリゴンのオブジェクトを作成
                     poly = BuildingPolygon(*vals, poly_id)
-                    polys.append(poly)
+                    polygons.append(poly)
 
             # メッシュデータの建物を分割しない and subset ==　PLY
             if (not self.separate) and (self.subset == Subset.PLY):
-                face_list.extend(faces)
-                polygon_list.extend(polys)
+                polygons_list.extend(polygons)
             else:
-                # todo: テスト用に一時的にコメントアウト
-                # self.set_building_object(building, faces)
-                self.set_building_object_with_polygon_object(building, polys)
+                self.set_building_object(building, polygons)
 
         # メッシュデータの全建物をまとめる？ and Subset.PLY ?
-        if len(face_list):
+        if len(polygons_list):
             building = buildings[0]
-            # todo: テスト用に一時的にコメントアウト
-            # self.set_building_object(building, face_list)
-            self.set_building_object_with_polygon_object(building, polygon_list)
+            self.set_building_object(building, polygons_list)
 
     def write_file(self, output_path):
         """ファイル作成"""
