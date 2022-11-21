@@ -8,13 +8,18 @@ OUTPUT = "output"
 ANSWER = "answer"
 
 
-def test_compare_polygon_and_id_from_first_element():
-    """Whether polygon/id pairs are correct or not"""
+def _make_city_gml_instance():
+    """Make CityGml instance"""
     basedir = Path(os.path.dirname(os.path.abspath(__file__)))
     pathname = os.path.join(basedir, DATA, "53392633_bldg_6697_2_op.gml")
-
-    # CityGmlのインスタンスを生成
     obj_city_gml = CityGml(pathname, Subset.PLY, "6677")
+    return obj_city_gml
+
+
+def test_compare_polygon_and_id_from_first_element():
+    """Whether polygon/id pairs are correct or not"""
+    # CityGmlのインスタンスを生成
+    obj_city_gml = _make_city_gml_instance()
     obj_city_gml.lod2()
 
     # 最初の要素を取得
