@@ -108,11 +108,12 @@ class Building:
         if self.textures:
             for texture in self.textures:
                 uv_coords = texture.search_uv_coords(poly_id)
-                if uv_coords:
+                if uv_coords is not None:
                     return uv_coords
         return None
 
     def create_triangle_meshes(self, polygons: List[BuildingPolygon]):
+        all_uvs = []
         for poly in polygons:
             transformed_polygon = [self.transform_coordinate(*x) for x in poly.get_coords()]
             # CityGMLと法線計算時の頂点の取扱順序が異なるため、反転させる
@@ -135,8 +136,13 @@ class Building:
                 self.triangles.extend(triangles_offset)
 
             poly_id = poly.poly_id
-            # 面に対応するUV座標があるかどうか探す
+            # 面に対応するUV座標があるかどうか探し、1つに束ねる
+            # なければダミーを格納することで、全てのメッシュに何かしらのUV座標を割り当てる
             uv_coords = self.find_uv_coords(poly_id)
+            if uv_coords is not None:
+                all_uvs.extend(uv_coords)
+            else:
+                all_uvs.extend([np.zeros((2)) for x in range(len(transformed_polygon))])
 
         # create triangle mesh by Open3D
         triangle_meshes = o3d.geometry.TriangleMesh()
