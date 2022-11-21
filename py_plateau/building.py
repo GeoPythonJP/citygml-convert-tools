@@ -51,6 +51,7 @@ class Building:
         self.vertices = []
         self.triangles = []
         self.triangle_meshes = []
+        self.textures = []
 
         self.lonlat = lonlat
 
@@ -62,6 +63,9 @@ class Building:
 
     def set_properties(self, properties):
         self.properties = properties
+
+    def set_textures(self, textures):
+        self.textures = textures
 
     def get_vertices(self):
         return self.vertices

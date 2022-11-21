@@ -207,6 +207,10 @@ class CityGml:
         properties = self.get_bldg_properties(building, self.root.nsmap)
         obj_building.set_properties(properties)
 
+        # set textures
+        textures = self.get_textures()
+        obj_building.set_textures(textures)
+
         polygons = [str2floats(face_str).reshape((-1, 3)) for face_str in faces]
         # polygonのidを付与できるように、buildingからpolygonのidを取得
         # ない場合はNoneにしとく？
