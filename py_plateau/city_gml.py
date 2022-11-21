@@ -234,8 +234,6 @@ class CityGml:
         textures = self.get_textures()
         obj_building.set_textures(textures)
 
-        # polygons = [str2floats(polygon.face).reshape((-1, 3)) for polygon in polys]
-
         if self.subset == Subset.PLY:
             obj_building.create_triangle_meshes_and_texture(polys)
         elif self.subset == Subset.GEOJSON:
@@ -334,7 +332,7 @@ class CityGml:
                     faces.extend(vals)
 
                     # ポリゴンのオブジェクトを作成
-                    poly = BuildingPolygon(vals, poly_id)
+                    poly = BuildingPolygon(*vals, poly_id)
                     polys.append(poly)
 
             # メッシュデータの建物を分割しない and subset ==　PLY
