@@ -123,10 +123,8 @@ class Building:
         self.polygons = polygons
 
     def create_triangle_meshes_and_texture(self, polygons):
-        # ここのpolygonsにpoly_idが渡るようにしたい
-        # そうするとこのタイミングでidテクスチャを取得できるようになる
         for poly in polygons:
-            transformed_polygon = [self.transform_coordinate(*x) for x in poly]
+            transformed_polygon = [self.transform_coordinate(*x.face) for x in poly]
             # CityGMLと法線計算時の頂点の取扱順序が異なるため、反転させる
             transformed_polygon = transformed_polygon[::-1]
             transformed_polygon = np.array(transformed_polygon)

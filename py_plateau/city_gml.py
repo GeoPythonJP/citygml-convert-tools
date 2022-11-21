@@ -342,13 +342,15 @@ class CityGml:
                 face_list.extend(faces)
                 polygon_list.extend(polys)
             else:
-                self.set_building_object(building, faces)
+                # todo: テスト用に一時的にコメントアウト
+                # self.set_building_object(building, faces)
                 self.set_building_object_with_polygon_object(building, polys)
 
         # メッシュデータの全建物をまとめる？ and Subset.PLY ?
         if len(face_list):
             building = buildings[0]
-            self.set_building_object(building, face_list)
+            # todo: テスト用に一時的にコメントアウト
+            # self.set_building_object(building, face_list)
             self.set_building_object_with_polygon_object(building, polygon_list)
 
     def write_file(self, output_path):
