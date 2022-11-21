@@ -157,7 +157,7 @@ class Building:
             if uv_coords is not None:
                 all_uvs.extend(uv_coords)
             else:
-                all_uvs.extend([np.zeros((2)) for x in range(len(transformed_polygon))])
+                all_uvs.extend([np.zeros((2)) for _ in range(len(transformed_polygon))])
 
         # create triangle mesh by Open3D
         triangle_meshes = o3d.geometry.TriangleMesh()
