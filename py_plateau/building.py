@@ -90,6 +90,39 @@ class Building:
                 self.vertices.append(vertices)
 
     def create_triangle_meshes(self, polygons):
+        for poly in polygons:
+            transformed_polygon = [self.transform_coordinate(*x) for x in poly]
+            # CityGMLと法線計算時の頂点の取扱順序が異なるため、反転させる
+            transformed_polygon = transformed_polygon[::-1]
+            transformed_polygon = np.array(transformed_polygon)
+
+            normal = self.get_normal(transformed_polygon)[0]
+            poly_2d = np.zeros((transformed_polygon.shape[0], 2))
+            for i, vertex in enumerate(transformed_polygon):
+                xy = self.to_2d(vertex, normal)
+                poly_2d[i] = xy
+
+            vertices_earcut = earcut(np.array(poly_2d, dtype=np.int64).flatten(), dim=2)
+
+            if len(vertices_earcut) > 0:
+                vertices_length = len(self.vertices)
+                self.vertices.extend(transformed_polygon)
+                triangles = np.array(vertices_earcut).reshape((-1, 3))
+                triangles_offset = triangles + vertices_length
+                self.triangles.extend(triangles_offset)
+
+        # create triangle mesh by Open3D
+        triangle_meshes = o3d.geometry.TriangleMesh()
+        triangle_meshes.vertices = o3d.utility.Vector3dVector(self.vertices)
+        triangle_meshes.triangles = o3d.utility.Vector3iVector(self.triangles)
+
+        # 法線の取得
+        triangle_meshes.compute_vertex_normals()
+
+        self.triangle_meshes = triangle_meshes
+        self.polygons = polygons
+
+    def create_triangle_meshes_and_texture(self, polygons):
         # ここのpolygonsにpoly_idが渡るようにしたい
         # そうするとこのタイミングでidテクスチャを取得できるようになる
         for poly in polygons:

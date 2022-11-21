@@ -212,12 +212,34 @@ class CityGml:
         obj_building.set_textures(textures)
 
         polygons = [str2floats(face_str).reshape((-1, 3)) for face_str in faces]
-        # polygonのidを付与できるように、buildingからpolygonのidを取得
-        # ない場合はNoneにしとく？
+
         if self.subset == Subset.PLY:
             obj_building.create_triangle_meshes(polygons)
         elif self.subset == Subset.GEOJSON:
             obj_building.create_vertices(polygons)
+        else:
+            raise Exception(f"ERROR: subset = {self.subset}")
+
+        self.obj_buildings.append(obj_building)
+
+    def set_building_object_with_polygon_object(self, building, polys):
+        """building objectを追加"""
+        obj_building = Building(self.from_srid, self.to_srid, self.lonlat)
+
+        # set properties
+        properties = self.get_bldg_properties(building, self.root.nsmap)
+        obj_building.set_properties(properties)
+
+        # set textures
+        textures = self.get_textures()
+        obj_building.set_textures(textures)
+
+        # polygons = [str2floats(polygon.face).reshape((-1, 3)) for polygon in polys]
+
+        if self.subset == Subset.PLY:
+            obj_building.create_triangle_meshes_and_texture(polys)
+        elif self.subset == Subset.GEOJSON:
+            obj_building.create_triangle_meshes_and_texture(polys)
         else:
             raise Exception(f"ERROR: subset = {self.subset}")
 
@@ -286,6 +308,8 @@ class CityGml:
 
         # 面リスト
         face_list = []
+        # ポリゴンのリスト
+        polygon_list = []
 
         # scan cityObjectMember
         buildings = tree.xpath("/core:CityModel/core:cityObjectMember/bldg:Building", namespaces=nsmap)
@@ -316,13 +340,16 @@ class CityGml:
             # メッシュデータの建物を分割しない and subset ==　PLY
             if (not self.separate) and (self.subset == Subset.PLY):
                 face_list.extend(faces)
+                polygon_list.extend(polys)
             else:
                 self.set_building_object(building, faces)
+                self.set_building_object_with_polygon_object(building, polys)
 
         # メッシュデータの全建物をまとめる？ and Subset.PLY ?
         if len(face_list):
             building = buildings[0]
             self.set_building_object(building, face_list)
+            self.set_building_object_with_polygon_object(building, polygon_list)
 
     def write_file(self, output_path):
         """ファイル作成"""
