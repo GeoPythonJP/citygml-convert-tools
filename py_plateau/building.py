@@ -127,6 +127,14 @@ class Building:
                     return uv_coords
         return None
 
+    def find_target_image_uri(self, poly_id):
+        """Find target image URI"""
+        if self.textures:
+            for texture in self.textures:
+                if texture.search_uv_coords(poly_id) is not None:
+                    return texture.image_uri
+        return None
+
     def create_triangle_meshes(self, polygons: List[BuildingPolygon]):
         all_uvs = []
         for poly in polygons:
@@ -150,10 +158,9 @@ class Building:
                 triangles_offset = triangles + vertices_length
                 self.triangles.extend(triangles_offset)
 
-            poly_id = poly.poly_id
             # 面に対応するUV座標があるかどうか探し、1つに束ねる
             # なければダミーを格納することで、全てのメッシュに何かしらのUV座標を割り当てる
-            uv_coords = self.find_uv_coords(poly_id)
+            uv_coords = self.find_uv_coords(poly.poly_id)
             if uv_coords is not None:
                 all_uvs.extend(uv_coords)
             else:
@@ -163,6 +170,26 @@ class Building:
         triangle_meshes = o3d.geometry.TriangleMesh()
         triangle_meshes.vertices = o3d.utility.Vector3dVector(self.vertices)
         triangle_meshes.triangles = o3d.utility.Vector3iVector(self.triangles)
+
+        triangles = np.array(self.triangles).flatten()
+        uvs = [all_uvs[index] for index in triangles]
+
+        image_uri_list = []
+        for poly in polygons:
+            image_uri_list.append(self.find_target_image_uri(poly.poly_id))
+        # 重複を除去
+        image_uri_list = list(set(image_uri_list))
+        # 最初の1つ目を抽出
+        image_uri = image_uri_list[0]
+
+        if image_uri is not None and len(image_uri_list) == 1:
+            # 拡張子をpngに変更
+            image_uri = image_uri.replace(".jpg", ".png")
+            texture_file_path = os.path.join("./", image_uri)
+
+            triangle_meshes.triangle_uvs = o3d.utility.Vector2dVector(np.array(uvs))
+            triangle_meshes.triangle_material_ids = o3d.utility.IntVector([0] * len(self.triangles))
+            triangle_meshes.textures = [o3d.io.read_image(texture_file_path)]
 
         # 法線の取得
         triangle_meshes.compute_vertex_normals()
