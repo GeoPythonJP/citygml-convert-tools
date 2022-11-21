@@ -35,9 +35,9 @@ class BuildingTexture:
 class BuildingPolygon:
     """gml:Polygon"""
 
-    def __init__(self):
-        self.face = ""
-        self.poly_id = ""
+    def __init__(self, face, poly_id):
+        self.face = face
+        self.poly_id = poly_id
 
 
 class Building:
