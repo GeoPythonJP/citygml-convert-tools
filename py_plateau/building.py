@@ -48,6 +48,10 @@ class BuildingPolygon:
     def get_coords(self):
         return self._str2floats().reshape((-1, 3))
 
+    def check_poly_id(self, poly_id):
+        """Check poly_id"""
+        return self.poly_id == poly_id
+
 
 class Building:
     """bldg:Building"""
