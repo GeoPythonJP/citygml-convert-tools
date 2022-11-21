@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import os
+import pdb
 import traceback
 from enum import Enum
 from pathlib import Path
@@ -207,6 +208,8 @@ class CityGml:
         obj_building.set_properties(properties)
 
         polygons = [str2floats(face_str).reshape((-1, 3)) for face_str in faces]
+        # polygonのidを付与できるように、buildingからpolygonのidを取得
+        # ない場合はNoneにしとく？
         if self.subset == Subset.PLY:
             obj_building.create_triangle_meshes(polygons)
         elif self.subset == Subset.GEOJSON:
@@ -290,9 +293,13 @@ class CityGml:
                 "bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon",
             ]
             faces = []
+            poly_ids = []
             for polygon_xpath in polygon_xpaths:
                 poslist_xpaths = building.xpath(polygon_xpath, namespaces=nsmap)
                 for poslist_xpath in poslist_xpaths:
+                    poly_id = poslist_xpath.attrib["{%s}id" % nsmap["gml"]]
+                    poly_ids.append(poly_id)
+
                     vals = poslist_xpath.xpath("gml:exterior/gml:LinearRing/gml:posList", namespaces=nsmap)
                     faces.extend(vals)
 
