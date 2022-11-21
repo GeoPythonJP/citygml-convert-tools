@@ -10,6 +10,28 @@ import pyproj
 from .earcut import earcut
 
 
+class BuildingTexture:
+    """Building texture"""
+
+    def __init__(self):
+        self.image_uri = ""
+        self.uv_coords = dict()
+
+    def set_image_uri(self, image_uri):
+        """Set image URI"""
+        self.image_uri = image_uri
+
+    def set_uv_coords(self, poly_id, uv_coords):
+        """Set UV coordinates"""
+        self.uv_coords[poly_id] = uv_coords
+
+    def search_uv_coords(self, poly_id):
+        """Search UV coordinates"""
+        if poly_id in self.uv_coords:
+            return self.uv_coords[poly_id]
+        return None
+
+
 class Building:
     """bldg:Building"""
 
@@ -25,9 +47,7 @@ class Building:
         self.lonlat = lonlat
 
         # pyproj.Transformer.from_crs(<変換元座標系>, <変換先座標系> [, always_xy])
-        self.transformer = pyproj.Transformer.from_crs(
-            f"epsg:{from_srid}", f"epsg:{to_srid}"
-        )
+        self.transformer = pyproj.Transformer.from_crs(f"epsg:{from_srid}", f"epsg:{to_srid}")
 
     def get_properties(self):
         return self.properties
@@ -118,9 +138,7 @@ class Building:
         if (normal == np.array([0.0, 0.0, 0.0])).all():
             return (normal, False)
 
-        normal = normal / math.sqrt(
-            normal[0] * normal[0] + normal[1] * normal[1] + normal[2] * normal[2]
-        )
+        normal = normal / math.sqrt(normal[0] * normal[0] + normal[1] * normal[1] + normal[2] * normal[2])
         return (normal, True)
 
     # 面と法線を渡して、2次元の座標に変換する
