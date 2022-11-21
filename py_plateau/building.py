@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import math
+import pdb
 from typing import Any, List
 
 import numpy as np
@@ -102,9 +103,17 @@ class Building:
             if len(vertices) > 0:
                 self.vertices.append(vertices)
 
-    def create_triangle_meshes(self, polygons: list):
+    def find_uv_coords(self, poly_id):
+        """Find UV coordinates"""
+        if self.textures:
+            for texture in self.textures:
+                uv_coords = texture.search_uv_coords(poly_id)
+                if uv_coords:
+                    return uv_coords
+        return None
+
+    def create_triangle_meshes(self, polygons: List[BuildingPolygon]):
         for poly in polygons:
-            poly_id = poly.poly_id
             transformed_polygon = [self.transform_coordinate(*x) for x in poly.get_coords()]
             # CityGMLと法線計算時の頂点の取扱順序が異なるため、反転させる
             transformed_polygon = transformed_polygon[::-1]
@@ -124,6 +133,10 @@ class Building:
                 triangles = np.array(vertices_earcut).reshape((-1, 3))
                 triangles_offset = triangles + vertices_length
                 self.triangles.extend(triangles_offset)
+
+            poly_id = poly.poly_id
+            # 面に対応するUV座標があるかどうか探す
+            uv_coords = self.find_uv_coords(poly_id)
 
         # create triangle mesh by Open3D
         triangle_meshes = o3d.geometry.TriangleMesh()
