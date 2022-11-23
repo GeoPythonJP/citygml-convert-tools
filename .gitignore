@@ -131,4 +131,5 @@ dmypy.json
 # private
 .idea/
 output/
+data/
 0*.*/
