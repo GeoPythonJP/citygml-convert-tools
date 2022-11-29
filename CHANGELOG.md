@@ -1,6 +1,14 @@
 # Changelog
 In this changelog all modifications to the `citygml-convert-tools`
 
+## 2022-11-23 
+### Added
+* 3D都市空間モデルビューワーを追加
+* テクスチャーのコードを追加
+
+### Fixed
+* none
+
 ## 2022-11-13 (v0.0.1)
 ### Added
 * コマンドラインをサブコマンド形式に変更
