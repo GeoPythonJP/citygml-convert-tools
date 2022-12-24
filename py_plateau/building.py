@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import math
+import pdb
 
 import numpy as np
 import open3d as o3d
@@ -32,6 +33,22 @@ class BuildingTexture:
         return None
 
 
+class BuildingPolygon:
+    """gml:Polygon"""
+
+    def __init__(self, vertices, poly_id):
+        # faceはlat lon zの羅列である文字列
+        self.vertices = vertices
+        self.poly_id = poly_id
+
+    def _str2floats(self):
+        """x y z -> [x, y, z]"""
+        return np.array([float(i) for i in self.vertices.text.split(" ")])
+
+    def get_coords(self):
+        return self._str2floats().reshape((-1, 3))
+
+
 class Building:
     """bldg:Building"""
 
@@ -43,6 +60,7 @@ class Building:
         self.vertices = []
         self.triangles = []
         self.triangle_meshes = []
+        self.textures = []
 
         self.lonlat = lonlat
 
@@ -54,6 +72,9 @@ class Building:
 
     def set_properties(self, properties):
         self.properties = properties
+
+    def set_textures(self, textures):
+        self.textures = textures
 
     def get_vertices(self):
         return self.vertices
@@ -73,13 +94,13 @@ class Building:
         self.vertices = []
 
         for plist in polygons:
-            vertices = [self.transform_coordinate(*x) for x in plist]
+            vertices = [self.transform_coordinate(*x) for x in plist.get_coords()]
             if len(vertices) > 0:
                 self.vertices.append(vertices)
 
     def create_triangle_meshes(self, polygons):
         for poly in polygons:
-            transformed_polygon = [self.transform_coordinate(*x) for x in poly]
+            transformed_polygon = [self.transform_coordinate(*x) for x in poly.get_coords()]
             # CityGMLと法線計算時の頂点の取扱順序が異なるため、反転させる
             transformed_polygon = transformed_polygon[::-1]
             transformed_polygon = np.array(transformed_polygon)
