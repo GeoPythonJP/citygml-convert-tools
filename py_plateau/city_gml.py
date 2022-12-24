@@ -5,7 +5,7 @@ import os
 import pdb
 import traceback
 from enum import Enum
-from pathlib import Path
+from typing import List
 
 import geopandas as gpd
 import lxml
@@ -62,8 +62,10 @@ class CityGml:
         # buildings
         self.obj_buildings = []
 
-        # textures
-        self.textures = []
+    @staticmethod
+    def convert_texture_image_file(textures: List[BuildingTexture]):
+        for i in textures:
+            i.convert_image()
 
     @staticmethod
     def get_bldg_properties(building, nsmap):
@@ -210,6 +212,10 @@ class CityGml:
         # set textures
         textures = self.get_textures()
         obj_building.set_textures(textures)
+
+        # テクスチャをpngに変換する
+        if textures:
+            self.convert_texture_image_file(textures)
 
         if self.subset == Subset.PLY:
             obj_building.create_triangle_meshes(polys)
